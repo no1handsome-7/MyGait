@@ -1,0 +1,10 @@
+{
+  "attire": "blue vest, white long-sleeve shirt, black shorts, white socks",
+  "clothing_geometry_effect": "expanded torso due to vest, visible arm gaps, normal leg shape",
+  "carried_objects": "none",
+  "viewpoint": "rear view",
+  "illumination": "even lighting",
+  "background": "green netting, pink stool",
+  "occlusion": "partial",
+  "image_quality": "clear"
+}

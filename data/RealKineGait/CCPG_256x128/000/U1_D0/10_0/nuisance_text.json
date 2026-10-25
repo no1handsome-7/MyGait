@@ -1,0 +1,10 @@
+{
+  "attire": "blue and white jacket, black shorts, white socks, white shoes",
+  "clothing_geometry_effect": "jacket slightly distorts silhouette due to loose fit",
+  "carried_objects": "none",
+  "viewpoint": "side view",
+  "illumination": "even lighting",
+  "background": "indoor setting with green netting and construction materials",
+  "occlusion": "partial occlusion by green netting in some frames",
+  "image_quality": "clear"
+}
