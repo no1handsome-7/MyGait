@@ -1,0 +1,10 @@
+{
+  "attire": "black jacket, light blue jeans",
+  "clothing_geometry_effect": "jacket fits loosely, jeans fit snugly",
+  "carried_objects": "none",
+  "viewpoint": "rear view",
+  "illumination": "natural daylight",
+  "background": "concrete surface with some greenery",
+  "occlusion": "partial shadow cast by person",
+  "image_quality": "clear"
+}

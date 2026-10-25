@@ -1,0 +1,10 @@
+{
+  "attire": "black jacket, blue jeans",
+  "clothing_geometry_effect": "expanded torso due to jacket, normal leg posture",
+  "carried_objects": "none",
+  "viewpoint": "rear view",
+  "illumination": "even lighting",
+  "background": "green screen",
+  "occlusion": "none",
+  "image_quality": "clear"
+}
