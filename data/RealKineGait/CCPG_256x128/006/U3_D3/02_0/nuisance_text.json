@@ -1,0 +1,13 @@
+{
+  "attire": {
+    "top": "red hoodie",
+    "bottom": "camouflage pants, black leggings"
+  },
+  "clothing_geometry_effect": "expanded torso, hidden arm gap",
+  "carried_objects": "none",
+  "viewpoint": "rear view",
+  "illumination": "even lighting",
+  "background": "indoor setting, plain walls",
+  "occlusion": "none",
+  "image_quality": "clear"
+}

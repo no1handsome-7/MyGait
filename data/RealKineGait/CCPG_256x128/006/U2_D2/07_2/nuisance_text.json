@@ -1,0 +1,10 @@
+{
+  "attire": "light gray hoodie, light gray shorts, black leggings, white socks, white shoes",
+  "clothing_geometry_effect": "expanded torso due to hoodie, skirt-like lower-body contour from shorts and leggings",
+  "carried_objects": "red bag",
+  "viewpoint": "frontal",
+  "illumination": "even lighting",
+  "background": "green netting",
+  "occlusion": "face blurred",
+  "image_quality": "clear"
+}

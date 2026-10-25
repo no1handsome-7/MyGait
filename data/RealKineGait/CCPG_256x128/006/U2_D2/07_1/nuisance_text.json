@@ -1,0 +1,10 @@
+{
+  "attire": "gray hoodie, black leggings, white sneakers",
+  "clothing_geometry_effect": "slightly loose fit, hood covers head",
+  "carried_objects": "box, phone",
+  "viewpoint": "side view",
+  "illumination": "even lighting",
+  "background": "green wall",
+  "occlusion": "none",
+  "image_quality": "clear"
+}

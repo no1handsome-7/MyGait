@@ -1,0 +1,10 @@
+{
+  "attire": "gray hoodie, black leggings, white sneakers",
+  "clothing_geometry_effect": "slightly loose fit, torso slightly expanded due to hoodie",
+  "carried_objects": "no objects carried",
+  "viewpoint": "side view",
+  "illumination": "even lighting, no harsh shadows",
+  "background": "indoor setting with green tarp and construction materials",
+  "occlusion": "partial face obscured by white mask",
+  "image_quality": "moderate resolution, slight blurriness"
+}
