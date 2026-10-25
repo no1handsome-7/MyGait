@@ -1,0 +1,14 @@
+{
+  "attire": {
+    "sweater": "black with white and yellow stripes",
+    "pants": "light gray",
+    "shoes": "white"
+  },
+  "clothing_geometry_effect": "slightly loose fit, especially in pants",
+  "carried_objects": "none",
+  "viewpoint": "side view",
+  "illumination": "even, likely overcast",
+  "background": "indoor setting with red and white elements",
+  "occlusion": "none",
+  "image_quality": "clear"
+}

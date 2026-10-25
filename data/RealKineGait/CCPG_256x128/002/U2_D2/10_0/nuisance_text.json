@@ -1,0 +1,10 @@
+{
+  "attire": "black jacket with white sleeves, light-colored pants",
+  "clothing_geometry_effect": "slightly loose fit, torso appears slightly expanded due to jacket",
+  "carried_objects": "none",
+  "viewpoint": "side view",
+  "illumination": "even lighting, no harsh shadows",
+  "background": "industrial setting with green tarp, metal structures",
+  "occlusion": "partial occlusion by green tarp in some frames",
+  "image_quality": "clear, no visible noise"
+}
