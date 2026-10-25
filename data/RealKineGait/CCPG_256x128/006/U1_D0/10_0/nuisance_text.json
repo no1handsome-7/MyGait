@@ -1,0 +1,14 @@
+{
+  "attire": {
+    "top": "black jacket",
+    "bottom": "black pants",
+    "footwear": "white shoes"
+  },
+  "clothing_geometry_effect": "tight fit, no visible distortion",
+  "carried_objects": "none",
+  "viewpoint": "side",
+  "illumination": "even",
+  "background": "indoor construction area",
+  "occlusion": "none",
+  "image_quality": "clear"
+}

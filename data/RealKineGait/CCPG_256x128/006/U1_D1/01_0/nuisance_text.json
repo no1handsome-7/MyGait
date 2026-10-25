@@ -1,0 +1,18 @@
+{
+  "attire": {
+    "jacket": "black",
+    "shirt": "white",
+    "pants": "light gray",
+    "shoes": "white"
+  },
+  "clothing_geometry_effect": {
+    "jacket": "slightly loose",
+    "pants": "loose"
+  },
+  "carried_objects": [],
+  "viewpoint": "frontal",
+  "illumination": "even",
+  "background": "indoor",
+  "occlusion": "none",
+  "image_quality": "clear"
+}
