@@ -1,0 +1,16 @@
+{
+  "attire": [
+    "shorts",
+    "jacket"
+  ],
+  "clothing_geometry_effect": [
+    "expanded torso",
+    "hidden arm gap"
+  ],
+  "carried_objects": [],
+  "viewpoint": "frontal",
+  "illumination": "even",
+  "background": "indoor court",
+  "occlusion": "none",
+  "image_quality": "low resolution"
+}

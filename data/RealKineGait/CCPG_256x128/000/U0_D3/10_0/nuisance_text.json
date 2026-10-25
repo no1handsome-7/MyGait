@@ -1,0 +1,10 @@
+{
+  "attire": "black t-shirt, camouflage shorts, white sneakers",
+  "clothing_geometry_effect": "slightly loose fit, torso slightly expanded due to t-shirt",
+  "carried_objects": "none",
+  "viewpoint": "rear view",
+  "illumination": "even lighting",
+  "background": "indoor setting with green netting and ladder",
+  "occlusion": "partial occlusion by green netting in some frames",
+  "image_quality": "clear"
+}

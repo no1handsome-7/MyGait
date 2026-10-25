@@ -1,0 +1,12 @@
+{
+  "gait_phase": "estimated from ankle horizontal trajectories",
+  "left_leg": "periodic stance/swing proxy from left ankle motion",
+  "right_leg": "periodic stance/swing proxy from right ankle motion",
+  "left_arm": "arm swing estimated from wrist velocity",
+  "right_arm": "arm swing estimated from wrist velocity",
+  "torso_pelvis": "torso and pelvis center used as motion normalization anchor",
+  "coordination": "coordination uncertain or weakly anti-phase",
+  "cadence_proxy": 0.0346,
+  "arm_swing_proxy": 0.0844,
+  "confidence": "medium; generated from 2D pose numeric trajectories"
+}

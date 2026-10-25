@@ -1,0 +1,10 @@
+{
+  "attire": "black sleeveless shirt, camouflage shorts",
+  "clothing_geometry_effect": "expanded torso, visible arm gaps, loose shorts",
+  "carried_objects": "pink object in hand",
+  "viewpoint": "rear view",
+  "illumination": "natural light, possibly overcast",
+  "background": "green tarp, concrete floor",
+  "occlusion": "partial view of person ahead",
+  "image_quality": "slightly blurred"
+}
