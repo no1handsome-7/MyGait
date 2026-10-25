@@ -1,0 +1,17 @@
+{
+  "attire": {
+    "shirt": "orange",
+    "pants": "gray",
+    "shoes": "white"
+  },
+  "clothing_geometry_effect": {
+    "shirt": "tight",
+    "pants": "loose"
+  },
+  "carried_objects": [],
+  "viewpoint": "frontal",
+  "illumination": "even",
+  "background": "indoor",
+  "occlusion": "none",
+  "image_quality": "clear"
+}

@@ -1,0 +1,10 @@
+{
+  "attire": "orange t-shirt, gray pants",
+  "clothing_geometry_effect": "expanded torso, loose clothing",
+  "carried_objects": "none",
+  "viewpoint": "rear view",
+  "illumination": "indoor lighting",
+  "background": "concrete floor, wall",
+  "occlusion": "partial",
+  "image_quality": "clear"
+}
