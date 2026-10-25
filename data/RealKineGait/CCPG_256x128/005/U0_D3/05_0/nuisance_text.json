@@ -1,0 +1,10 @@
+{
+  "attire": "light green t-shirt and light green pants",
+  "clothing_geometry_effect": "loose fit, no visible distortion of silhouette",
+  "carried_objects": "none",
+  "viewpoint": "frontal",
+  "illumination": "even lighting",
+  "background": "indoor setting with green floor and white wall",
+  "occlusion": "partial face obscured by blurred area",
+  "image_quality": "clear"
+}

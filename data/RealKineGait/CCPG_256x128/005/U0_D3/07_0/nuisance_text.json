@@ -1,0 +1,10 @@
+{
+  "attire": "white t-shirt, white pants",
+  "clothing_geometry_effect": "slightly loose fit, torso slightly expanded",
+  "carried_objects": "pink bag",
+  "viewpoint": "side view",
+  "illumination": "even lighting",
+  "background": "green curtain",
+  "occlusion": "partial",
+  "image_quality": "low resolution"
+}
