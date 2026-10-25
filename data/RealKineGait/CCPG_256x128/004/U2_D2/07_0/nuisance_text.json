@@ -1,0 +1,10 @@
+{
+  "attire": "red hoodie, olive green pants, white shoes",
+  "clothing_geometry_effect": "hoodie covers head, pants fit snugly, shoes cover feet",
+  "carried_objects": "pink stool",
+  "viewpoint": "rear view",
+  "illumination": "even lighting",
+  "background": "green curtain",
+  "occlusion": "none",
+  "image_quality": "clear"
+}
