@@ -1,0 +1,10 @@
+{
+  "attire": "blue and white jacket, black pants",
+  "clothing_geometry_effect": "expanded torso, hidden arm gap",
+  "carried_objects": "green bag",
+  "viewpoint": "side view",
+  "illumination": "even lighting",
+  "background": "green curtain, metal door",
+  "occlusion": "partial",
+  "image_quality": "low resolution"
+}

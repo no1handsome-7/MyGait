@@ -1,0 +1,10 @@
+{
+  "attire": "blue vest over white long-sleeve shirt, black pants",
+  "clothing_geometry_effect": "expanded torso due to vest, tight fit of pants",
+  "carried_objects": "none",
+  "viewpoint": "rear view",
+  "illumination": "even lighting",
+  "background": "green netting, pink object",
+  "occlusion": "partial",
+  "image_quality": "clear"
+}
