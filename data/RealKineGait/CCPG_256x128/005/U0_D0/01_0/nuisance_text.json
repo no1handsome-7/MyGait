@@ -1,0 +1,13 @@
+{
+  "attire": {
+    "shirt": "white t-shirt with graphic",
+    "pants": "black pants"
+  },
+  "clothing_geometry_effect": "slightly loose fit, torso slightly expanded",
+  "carried_objects": "none",
+  "viewpoint": "frontal",
+  "illumination": "even lighting",
+  "background": "indistinct urban setting",
+  "occlusion": "face blurred",
+  "image_quality": "clear"
+}

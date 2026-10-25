@@ -1,0 +1,14 @@
+{
+  "attire": {
+    "shirt": "gray t-shirt with 'N' logo",
+    "pants": "dark jeans",
+    "shoes": "white sneakers"
+  },
+  "clothing_geometry_effect": "slightly loose fit, especially at the pants",
+  "carried_objects": "none",
+  "viewpoint": "frontal to slightly side-on",
+  "illumination": "even, likely indoor",
+  "background": "indoor sports court with green floor and white lines",
+  "occlusion": "face blurred",
+  "image_quality": "clear"
+}

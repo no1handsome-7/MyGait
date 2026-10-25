@@ -1,0 +1,10 @@
+{
+  "attire": "black jacket, light gray pants",
+  "clothing_geometry_effect": "expanded torso, hidden arm gap",
+  "carried_objects": "none",
+  "viewpoint": "side view",
+  "illumination": "even lighting",
+  "background": "green screen, metallic door",
+  "occlusion": "none",
+  "image_quality": "low resolution"
+}
