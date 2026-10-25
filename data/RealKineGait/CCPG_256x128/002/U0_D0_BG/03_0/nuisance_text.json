@@ -1,0 +1,10 @@
+{
+  "attire": "polo shirt, jeans, white sneakers",
+  "clothing_geometry_effect": "slightly loose fit, normal torso, visible arms",
+  "carried_objects": "crossbody bag",
+  "viewpoint": "frontal",
+  "illumination": "bright, even lighting",
+  "background": "indoor court with green floor, yellow lines, and partial green netting",
+  "occlusion": "face blurred",
+  "image_quality": "clear"
+}
