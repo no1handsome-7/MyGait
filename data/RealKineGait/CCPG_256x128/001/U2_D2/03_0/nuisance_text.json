@@ -1,0 +1,19 @@
+{
+  "attire": {
+    "sweater": "black",
+    "shorts": "gray",
+    "hat": "black",
+    "shoes": "white"
+  },
+  "clothing_geometry_effect": {
+    "expanded_torso": "yes",
+    "hidden_arm_gap": "yes",
+    "skirt_like_lower_body_contour": "no"
+  },
+  "carried_objects": "none",
+  "viewpoint": "top-down",
+  "illumination": "even",
+  "background": "indoor",
+  "occlusion": "none",
+  "image_quality": "clear"
+}

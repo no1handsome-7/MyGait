@@ -1,0 +1,10 @@
+{
+  "attire": "gray hoodie, beige pants, white shoes",
+  "clothing_geometry_effect": "slightly loose fit, hooded top",
+  "carried_objects": "green bag",
+  "viewpoint": "side view, back view",
+  "illumination": "even lighting",
+  "background": "indoor setting, green wall, gray floor",
+  "occlusion": "partial",
+  "image_quality": "clear"
+}

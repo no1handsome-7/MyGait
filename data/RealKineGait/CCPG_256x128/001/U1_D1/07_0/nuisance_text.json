@@ -1,0 +1,10 @@
+{
+  "attire": "white hoodie, white pants",
+  "clothing_geometry_effect": "expanded torso, hidden arm gap",
+  "carried_objects": "none",
+  "viewpoint": "rear view",
+  "illumination": "even lighting",
+  "background": "green netting, pink stool",
+  "occlusion": "partial",
+  "image_quality": "clear"
+}

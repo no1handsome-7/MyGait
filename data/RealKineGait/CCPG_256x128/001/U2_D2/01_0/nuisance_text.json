@@ -1,0 +1,17 @@
+{
+  "attire": {
+    "top": "black long-sleeve shirt",
+    "bottom": "light gray shorts"
+  },
+  "clothing_geometry_effect": {
+    "torso": "slightly expanded due to shirt",
+    "arms": "hidden under sleeves",
+    "legs": "slightly obscured by shorts"
+  },
+  "carried_objects": "none",
+  "viewpoint": "frontal",
+  "illumination": "even",
+  "background": "indoor, possibly near a wall",
+  "occlusion": "none",
+  "image_quality": "clear"
+}
