@@ -1,0 +1,10 @@
+{
+  "attire": "white t-shirt, dark pants",
+  "clothing_geometry_effect": "slightly loose fit, torso slightly expanded",
+  "carried_objects": "black bag slung over shoulder",
+  "viewpoint": "side view",
+  "illumination": "even lighting",
+  "background": "indoor court with green floor and yellow lines",
+  "occlusion": "face blurred",
+  "image_quality": "low resolution"
+}

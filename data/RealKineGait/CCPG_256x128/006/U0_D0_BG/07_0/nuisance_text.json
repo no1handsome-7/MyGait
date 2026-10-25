@@ -1,0 +1,10 @@
+{
+  "attire": "white t-shirt, black pants, white shoes",
+  "clothing_geometry_effect": "slightly loose t-shirt, tight pants",
+  "carried_objects": "black backpack",
+  "viewpoint": "side view",
+  "illumination": "even lighting",
+  "background": "green netting",
+  "occlusion": "none",
+  "image_quality": "clear"
+}

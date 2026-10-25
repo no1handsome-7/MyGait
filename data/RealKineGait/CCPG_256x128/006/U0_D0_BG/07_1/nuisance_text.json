@@ -1,0 +1,10 @@
+{
+  "attire": "white t-shirt, black pants, white socks",
+  "clothing_geometry_effect": "slightly loose fit, normal posture",
+  "carried_objects": "backpack, pink object",
+  "viewpoint": "rear view",
+  "illumination": "even lighting",
+  "background": "green curtain",
+  "occlusion": "partial",
+  "image_quality": "clear"
+}

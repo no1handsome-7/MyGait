@@ -1,0 +1,20 @@
+{
+  "attire": {
+    "shirt": "white",
+    "pants": "black",
+    "shoes": "white"
+  },
+  "clothing_geometry_effect": {
+    "torso": "slightly expanded",
+    "arms": "hidden behind bag"
+  },
+  "carried_objects": {
+    "type": "backpack",
+    "position": "left shoulder"
+  },
+  "viewpoint": "frontal",
+  "illumination": "even",
+  "background": "indistinct urban setting",
+  "occlusion": "none",
+  "image_quality": "clear"
+}
