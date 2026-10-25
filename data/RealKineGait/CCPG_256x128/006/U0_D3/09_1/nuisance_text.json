@@ -1,0 +1,10 @@
+{
+  "attire": "white t-shirt, camouflage pants, white sneakers",
+  "clothing_geometry_effect": "expanded torso, hidden arm gap, skirt-like lower-body contour",
+  "carried_objects": "none",
+  "viewpoint": "side view",
+  "illumination": "even lighting",
+  "background": "metallic wall, concrete floor",
+  "occlusion": "none",
+  "image_quality": "clear"
+}

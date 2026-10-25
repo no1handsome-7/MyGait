@@ -1,0 +1,10 @@
+{
+  "attire": "black jacket, white t-shirt, black pants, white sneakers",
+  "clothing_geometry_effect": "slightly loose fit, natural posture",
+  "carried_objects": "none",
+  "viewpoint": "frontal, slightly elevated",
+  "illumination": "even, bright",
+  "background": "indoor, green floor, light-colored wall",
+  "occlusion": "head",
+  "image_quality": "clear"
+}
