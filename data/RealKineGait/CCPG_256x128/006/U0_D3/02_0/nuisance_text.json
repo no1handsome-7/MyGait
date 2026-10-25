@@ -1,0 +1,17 @@
+{
+  "attire": {
+    "shirt": "white",
+    "pants": "camouflage",
+    "shoes": "white"
+  },
+  "clothing_geometry_effect": {
+    "shirt": "loose",
+    "pants": "tight"
+  },
+  "carried_objects": [],
+  "viewpoint": "rear",
+  "illumination": "indoor",
+  "background": "indoor",
+  "occlusion": "none",
+  "image_quality": "clear"
+}

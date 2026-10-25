@@ -1,0 +1,18 @@
+{
+  "attire": {
+    "shirt": "white",
+    "pants": "camouflage",
+    "shoes": "white"
+  },
+  "clothing_geometry_effect": {
+    "torso": "slightly expanded",
+    "arms": "hidden",
+    "legs": "slightly bent"
+  },
+  "carried_objects": [],
+  "viewpoint": "rear",
+  "illumination": "even",
+  "background": "building facade",
+  "occlusion": "none",
+  "image_quality": "clear"
+}

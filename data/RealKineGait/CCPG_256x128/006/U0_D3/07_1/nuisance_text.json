@@ -1,0 +1,10 @@
+{
+  "attire": "white t-shirt, camouflage pants, white socks, white shoes",
+  "clothing_geometry_effect": "expanded torso, hidden arm gap, skirt-like lower-body contour",
+  "carried_objects": "pink object (possibly a bag)",
+  "viewpoint": "side view, front view, back view, side view",
+  "illumination": "even lighting",
+  "background": "green netting",
+  "occlusion": "none",
+  "image_quality": "clear"
+}
