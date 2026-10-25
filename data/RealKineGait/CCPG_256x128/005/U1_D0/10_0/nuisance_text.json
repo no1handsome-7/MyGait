@@ -1,0 +1,10 @@
+{
+  "attire": "dark long-sleeve shirt, black pants, white sneakers",
+  "clothing_geometry_effect": "tight-fitting pants, loose shirt",
+  "carried_objects": "red bag",
+  "viewpoint": "side view",
+  "illumination": "even lighting",
+  "background": "green tarp, red ladder, concrete floor",
+  "occlusion": "partial",
+  "image_quality": "clear"
+}

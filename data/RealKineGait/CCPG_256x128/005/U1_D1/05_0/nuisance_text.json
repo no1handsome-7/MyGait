@@ -1,0 +1,10 @@
+{
+  "attire": "dark blue sweatshirt with light text, black pants, white shoes",
+  "clothing_geometry_effect": "loose clothing, especially around arms and legs, may obscure some details of movement",
+  "carried_objects": "none",
+  "viewpoint": "frontal",
+  "illumination": "even, likely indoor lighting",
+  "background": "indoor setting with green wall and concrete floor",
+  "occlusion": "partial, person partially obscured by green wall in first frame",
+  "image_quality": "clear"
+}
