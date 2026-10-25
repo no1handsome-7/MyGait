@@ -1,0 +1,10 @@
+{
+  "attire": "blue jacket, brown shirt, khaki pants, white shoes",
+  "clothing_geometry_effect": "slightly loose fit, torso expansion due to jacket",
+  "carried_objects": "none",
+  "viewpoint": "frontal",
+  "illumination": "even lighting",
+  "background": "indoor setting with green and beige walls",
+  "occlusion": "face obscured by white mask",
+  "image_quality": "clear"
+}
