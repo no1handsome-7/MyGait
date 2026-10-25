@@ -1,0 +1,10 @@
+{
+  "attire": "white shirt, black pants",
+  "clothing_geometry_effect": "slightly loose fit, normal torso",
+  "carried_objects": "yellow bag",
+  "viewpoint": "side view",
+  "illumination": "even lighting",
+  "background": "green wall",
+  "occlusion": "partial",
+  "image_quality": "clear"
+}
