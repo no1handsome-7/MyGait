@@ -1,0 +1,10 @@
+{
+  "attire": "blue jacket, camouflage pants",
+  "clothing_geometry_effect": "expanded torso, loose fit",
+  "carried_objects": "small bag",
+  "viewpoint": "rear view",
+  "illumination": "even lighting",
+  "background": "concrete surface, wall",
+  "occlusion": "partial",
+  "image_quality": "clear"
+}

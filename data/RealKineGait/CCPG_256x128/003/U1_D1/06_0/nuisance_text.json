@@ -1,0 +1,10 @@
+{
+  "attire": "blue jacket, patterned pants",
+  "clothing_geometry_effect": "expanded torso, visible arm gaps",
+  "carried_objects": "pink plastic stool",
+  "viewpoint": "rear view",
+  "illumination": "even lighting",
+  "background": "green tarp, concrete floor",
+  "occlusion": "partial",
+  "image_quality": "clear"
+}

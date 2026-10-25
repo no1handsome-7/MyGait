@@ -1,0 +1,10 @@
+{
+  "attire": "blue jacket, patterned shirt, camouflage overalls, white shoes",
+  "clothing_geometry_effect": "expanded torso, hidden arm gap, skirt-like lower-body contour",
+  "carried_objects": "none",
+  "viewpoint": "frontal",
+  "illumination": "even",
+  "background": "indoor, green floor, white wall",
+  "occlusion": "none",
+  "image_quality": "low resolution"
+}

@@ -1,0 +1,10 @@
+{
+  "attire": "blue shirt, camouflage pants",
+  "clothing_geometry_effect": "expanded torso, hidden arm gap",
+  "carried_objects": "none",
+  "viewpoint": "rear view",
+  "illumination": "even lighting",
+  "background": "green tarp",
+  "occlusion": "none",
+  "image_quality": "clear"
+}

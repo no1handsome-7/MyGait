@@ -1,0 +1,10 @@
+{
+  "attire": "blue denim jacket, light blue jeans, white shoes",
+  "clothing_geometry_effect": "loose fit, slightly distorted silhouette due to fabric movement",
+  "carried_objects": "none",
+  "viewpoint": "side view",
+  "illumination": "even lighting",
+  "background": "industrial setting with green tarp, metal structures, and construction materials",
+  "occlusion": "partial face obscured by blur",
+  "image_quality": "low resolution"
+}

@@ -1,0 +1,10 @@
+{
+  "attire": "blue shirt, jeans",
+  "clothing_geometry_effect": "expanded torso, hidden arm gap",
+  "carried_objects": "camera",
+  "viewpoint": "rear view",
+  "illumination": "even lighting",
+  "background": "green curtain",
+  "occlusion": "none",
+  "image_quality": "clear"
+}
