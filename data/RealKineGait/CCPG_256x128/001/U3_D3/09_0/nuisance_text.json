@@ -1,0 +1,10 @@
+{
+  "attire": "blue shirt, dark pants, white shoes",
+  "clothing_geometry_effect": "loose fit, slightly distorting silhouette",
+  "carried_objects": "none",
+  "viewpoint": "side view",
+  "illumination": "even lighting",
+  "background": "indoor setting with green panels and metallic structures",
+  "occlusion": "partial",
+  "image_quality": "low resolution"
+}
