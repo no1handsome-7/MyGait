@@ -1,0 +1,10 @@
+{
+  "attire": "dark brown sweatshirt, light gray pants",
+  "clothing_geometry_effect": "loose clothing, hooded sweatshirt",
+  "carried_objects": "none",
+  "viewpoint": "frontal",
+  "illumination": "even",
+  "background": "indoor, glass wall",
+  "occlusion": "face",
+  "image_quality": "clear"
+}

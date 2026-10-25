@@ -1,0 +1,10 @@
+{
+  "attire": "black jacket, light green pants, white shoes",
+  "clothing_geometry_effect": "loose clothing, expanded torso, hidden arm gap",
+  "carried_objects": "none",
+  "viewpoint": "frontal",
+  "illumination": "even",
+  "background": "green wall, concrete floor",
+  "occlusion": "partial",
+  "image_quality": "clear"
+}

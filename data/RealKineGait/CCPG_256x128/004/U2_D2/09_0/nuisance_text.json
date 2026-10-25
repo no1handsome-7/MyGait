@@ -1,0 +1,10 @@
+{
+  "attire": "red jacket, green pants, white shoes",
+  "clothing_geometry_effect": "expanded torso, hidden arm gap",
+  "carried_objects": "none",
+  "viewpoint": "side view",
+  "illumination": "even lighting",
+  "background": "indoor setting with metal structure",
+  "occlusion": "partial",
+  "image_quality": "clear"
+}
