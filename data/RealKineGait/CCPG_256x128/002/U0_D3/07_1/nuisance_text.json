@@ -1,0 +1,10 @@
+{
+  "attire": "brown and white striped shirt, beige shorts, light blue jeans",
+  "clothing_geometry_effect": "expanded torso, hidden arm gap",
+  "carried_objects": "pink bag",
+  "viewpoint": "frontal",
+  "illumination": "even",
+  "background": "green curtain",
+  "occlusion": "partial",
+  "image_quality": "clear"
+}

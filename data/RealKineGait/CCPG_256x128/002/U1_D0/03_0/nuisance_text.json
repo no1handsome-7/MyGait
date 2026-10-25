@@ -1,0 +1,14 @@
+{
+  "attire": {
+    "shirt": "red",
+    "pants": "gray",
+    "shoes": "white"
+  },
+  "clothing_geometry_effect": "slightly loose",
+  "carried_objects": "none",
+  "viewpoint": "frontal",
+  "illumination": "even",
+  "background": "indoor court",
+  "occlusion": "none",
+  "image_quality": "clear"
+}
