@@ -1,0 +1,14 @@
+{
+  "attire": {
+    "shirt": "orange",
+    "pants": "light gray",
+    "hat": "black"
+  },
+  "clothing_geometry_effect": "slightly loose",
+  "carried_objects": "black backpack",
+  "viewpoint": "rear",
+  "illumination": "even",
+  "background": "indoor, greenish floor",
+  "occlusion": "none",
+  "image_quality": "clear"
+}
