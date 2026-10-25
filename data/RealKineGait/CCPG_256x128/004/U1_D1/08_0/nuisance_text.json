@@ -1,0 +1,10 @@
+{
+  "attire": "green shirt, light-colored pants",
+  "clothing_geometry_effect": "slightly distorted silhouette due to clothing texture",
+  "carried_objects": "white bag",
+  "viewpoint": "side view",
+  "illumination": "bright, possibly overexposed",
+  "background": "indistinct, possibly indoor",
+  "occlusion": "partial",
+  "image_quality": "low resolution"
+}

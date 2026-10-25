@@ -1,0 +1,10 @@
+{
+  "attire": "black jacket, gray pants, white shoes",
+  "clothing_geometry_effect": "expanded torso, hidden arm gap, skirt-like lower-body contour",
+  "carried_objects": "none",
+  "viewpoint": "side view",
+  "illumination": "even lighting",
+  "background": "indoor setting with green wall",
+  "occlusion": "none",
+  "image_quality": "clear"
+}

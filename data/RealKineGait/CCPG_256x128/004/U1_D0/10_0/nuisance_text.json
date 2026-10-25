@@ -1,0 +1,10 @@
+{
+  "attire": "black",
+  "clothing_geometry_effect": "slightly loose",
+  "carried_objects": "none",
+  "viewpoint": "side",
+  "illumination": "even",
+  "background": "indoor, green floor, white wall",
+  "occlusion": "partial",
+  "image_quality": "clear"
+}
