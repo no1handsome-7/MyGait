@@ -1,0 +1,19 @@
+{
+  "attire": {
+    "sweatshirt": "light gray",
+    "pants": "gray",
+    "leggings": "black",
+    "shoes": "white"
+  },
+  "clothing_geometry_effect": {
+    "sweatshirt": "loose fit",
+    "pants": "tight fit",
+    "leggings": "visible under pants"
+  },
+  "carried_objects": "none",
+  "viewpoint": "side",
+  "illumination": "even",
+  "background": "indoor",
+  "occlusion": "none",
+  "image_quality": "clear"
+}

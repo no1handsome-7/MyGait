@@ -1,0 +1,14 @@
+{
+  "attire": {
+    "top": "black jacket",
+    "bottom": "light gray pants",
+    "footwear": "white shoes"
+  },
+  "clothing_geometry_effect": "slightly loose fit",
+  "carried_objects": "none",
+  "viewpoint": "side view",
+  "illumination": "even lighting",
+  "background": "indoor setting with green curtain and metallic door",
+  "occlusion": "none",
+  "image_quality": "clear"
+}
