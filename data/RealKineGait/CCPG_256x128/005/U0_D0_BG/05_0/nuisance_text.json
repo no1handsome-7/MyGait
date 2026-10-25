@@ -1,0 +1,19 @@
+{
+  "attire": {
+    "shirt": "light blue",
+    "pants": "black",
+    "shoes": "white"
+  },
+  "clothing_geometry_effect": {
+    "torso": "slightly expanded",
+    "arms": "hidden behind body"
+  },
+  "carried_objects": {
+    "bag": "yellow strap across shoulder"
+  },
+  "viewpoint": "side",
+  "illumination": "even",
+  "background": "indoor, green wall, white door",
+  "occlusion": "none",
+  "image_quality": "clear"
+}

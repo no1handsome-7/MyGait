@@ -1,0 +1,10 @@
+{
+  "attire": "casual",
+  "clothing_geometry_effect": "slightly loose",
+  "carried_objects": "crossbody bag",
+  "viewpoint": "frontal",
+  "illumination": "bright",
+  "background": "indoor",
+  "occlusion": "none",
+  "image_quality": "clear"
+}

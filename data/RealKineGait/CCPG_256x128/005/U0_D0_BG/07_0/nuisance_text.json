@@ -1,0 +1,10 @@
+{
+  "attire": "white t-shirt, dark pants",
+  "clothing_geometry_effect": "slightly loose fit, torso slightly expanded",
+  "carried_objects": "yellow bag, pink bag",
+  "viewpoint": "side view, slightly angled",
+  "illumination": "even lighting, no harsh shadows",
+  "background": "green netting, solid color",
+  "occlusion": "partial, some areas obscured by objects",
+  "image_quality": "low resolution, pixelated"
+}
