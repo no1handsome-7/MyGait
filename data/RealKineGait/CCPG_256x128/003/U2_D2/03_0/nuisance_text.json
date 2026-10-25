@@ -1,0 +1,10 @@
+{
+  "attire": "black hoodie, light gray pants",
+  "clothing_geometry_effect": "expanded torso, hidden arm gap",
+  "carried_objects": "none",
+  "viewpoint": "frontal",
+  "illumination": "even",
+  "background": "indoor, green floor",
+  "occlusion": "none",
+  "image_quality": "clear"
+}

@@ -1,0 +1,17 @@
+{
+  "attire": {
+    "sweatshirt": "black",
+    "pants": "gray",
+    "shoes": "white"
+  },
+  "clothing_geometry_effect": {
+    "sweatshirt": "loose",
+    "pants": "loose"
+  },
+  "carried_objects": [],
+  "viewpoint": "rear",
+  "illumination": "even",
+  "background": "indoor",
+  "occlusion": "none",
+  "image_quality": "clear"
+}

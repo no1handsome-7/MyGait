@@ -1,0 +1,10 @@
+{
+  "attire": "black long-sleeve shirt, white pants",
+  "clothing_geometry_effect": "tight-fitting top, loose pants",
+  "carried_objects": "box",
+  "viewpoint": "side view",
+  "illumination": "even lighting",
+  "background": "green screen",
+  "occlusion": "none",
+  "image_quality": "clear"
+}
