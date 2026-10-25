@@ -1,0 +1,10 @@
+{
+  "attire": "light-colored top, dark pants",
+  "clothing_geometry_effect": "expanded torso, hidden arm gap",
+  "carried_objects": "no objects",
+  "viewpoint": "side view",
+  "illumination": "even lighting",
+  "background": "green wall, bookshelves",
+  "occlusion": "partial",
+  "image_quality": "clear"
+}

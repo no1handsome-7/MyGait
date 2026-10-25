@@ -1,0 +1,10 @@
+{
+  "attire": "black tracksuit",
+  "clothing_geometry_effect": "expanded torso, hidden arm gap",
+  "carried_objects": "none",
+  "viewpoint": "frontal",
+  "illumination": "even",
+  "background": "indoor court",
+  "occlusion": "none",
+  "image_quality": "low resolution"
+}
