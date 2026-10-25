@@ -1,0 +1,14 @@
+{
+  "attire": {
+    "sweatshirt": "dark blue",
+    "shorts": "camouflage green",
+    "shoes": "white with red accents"
+  },
+  "clothing_geometry_effect": "slightly loose",
+  "carried_objects": "none",
+  "viewpoint": "frontal",
+  "illumination": "even",
+  "background": "indoor, green wall",
+  "occlusion": "none",
+  "image_quality": "clear"
+}

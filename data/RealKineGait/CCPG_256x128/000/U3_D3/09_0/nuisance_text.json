@@ -1,0 +1,10 @@
+{
+  "attire": "dark long-sleeve shirt, camouflage shorts, white sneakers",
+  "clothing_geometry_effect": "expanded torso, hidden arm gap, skirt-like lower-body contour",
+  "carried_objects": "none",
+  "viewpoint": "side view",
+  "illumination": "indoor, artificial light",
+  "background": "green wall, metal door",
+  "occlusion": "partial face, partial body",
+  "image_quality": "clear"
+}

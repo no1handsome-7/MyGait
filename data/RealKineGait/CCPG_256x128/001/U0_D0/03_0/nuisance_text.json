@@ -1,0 +1,14 @@
+{
+  "attire": {
+    "shirt": "orange",
+    "pants": "beige",
+    "hat": "black"
+  },
+  "clothing_geometry_effect": "expanded torso, hidden arm gap",
+  "carried_objects": "none",
+  "viewpoint": "frontal, side, back",
+  "illumination": "even",
+  "background": "concrete surface",
+  "occlusion": "none",
+  "image_quality": "clear"
+}

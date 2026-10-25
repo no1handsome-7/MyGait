@@ -1,0 +1,10 @@
+{
+  "attire": "black long-sleeve shirt, camouflage shorts",
+  "clothing_geometry_effect": "expanded torso, hidden arm gap",
+  "carried_objects": "pink bag",
+  "viewpoint": "rear view",
+  "illumination": "even lighting",
+  "background": "green tarp",
+  "occlusion": "partial",
+  "image_quality": "clear"
+}
