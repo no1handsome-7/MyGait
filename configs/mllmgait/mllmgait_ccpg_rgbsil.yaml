@@ -1,0 +1,145 @@
+# MLLMGait for CCPG, default RGB + Silhouette + optional Qwen2.5-VL motion text feature.
+# IMPORTANT: OpenGait sorts pkl files lexicographically inside each sequence folder, then filters them by data_in_use.
+# This config assumes the selected pkl order after filtering is:
+#   ipts[0] = RGB clip pkl,       shape [T,3,H,W] or [T,H,W,3]
+#   ipts[1] = silhouette pkl,    shape [T,H,W] or [T,1,H,W]
+#   ipts[2] = Qwen text feature, shape [T,D] where each frame repeats the same sequence-level feature
+# If your CCPG preprocessing keeps only silhouettes, set rgb_index: null and data_in_use accordingly.
+
+data_cfg:
+  dataset_name: CCPG
+  dataset_root: your_path
+  dataset_partition: ./datasets/CCPG/CCPG.json
+  num_workers: 4
+  # Change this list to match your sorted pkl files. Example target names:
+  #   00-rgb.pkl, 01-sil.pkl, 02-qwen25vl_motion_feat.pkl
+  data_in_use: [true, true, true, false]
+  remove_no_gallery: false
+  test_dataset_name: CCPG
+
+evaluator_cfg:
+  enable_float16: true
+  restore_ckpt_strict: true
+  restore_hint: 60000
+  save_name: MLLMGait_RGBSIL_Qwen_CCPG
+  eval_func: evaluate_CCPG
+  sampler:
+    batch_shuffle: false
+    batch_size: 4
+    sample_type: all_ordered
+    frames_all_limit: 720
+  metric: euc
+  transform:
+    - type: BaseRgbNormalizeTransform
+      cutting: null
+    - type: BaseSilCuttingTransform
+      img_w: 64
+    - type: TextFeatureTransform
+
+loss_cfg:
+  - loss_term_weight: 1.0
+    margin: 0.2
+    type: TripletLoss
+    log_prefix: triplet
+  - loss_term_weight: 1.0
+    scale: 16
+    type: CrossEntropyLoss
+    log_prefix: softmax
+    log_accuracy: true
+  - loss_term_weight: 0.15
+    type: CrossModalConsistencyLoss
+    log_prefix: xmodal
+  - loss_term_weight: 0.05
+    temperature: 0.07
+    type: TextGuidanceContrastLoss
+    log_prefix: text_align
+
+model_cfg:
+  model: MLLMGait
+  channels: 512
+  dropout: 0.1
+  temporal_heads: 4
+  temporal_layers: 1
+  bin_num: [16]
+
+  # Indices are after data_in_use filtering, not original sorted-file indices.
+  rgb_index: 0
+  sil_index: 1
+  pc_index: null
+  text_index: 2
+  # Qwen2.5-VL-7B hidden size is commonly 3584. Change this if your cached feature dim differs.
+  text_dim: 3584
+
+  SeparateFCs:
+    in_channels: 512
+    out_channels: 256
+    parts_num: 16
+  SeparateBNNecks:
+    class_num: 100
+    in_channels: 256
+    parts_num: 16
+
+  cloth_adversary:
+    enabled: true
+    num_clothes: 8
+    lambda: 0.2
+    loss_weight: 0.1
+    # Optional substring-to-class mapping for CCPG condition strings.
+    # Unknown strings fall back to a stable hash bucket.
+    patterns:
+      nm: 0
+      cl: 1
+      bg: 2
+      ub: 3
+      db: 4
+
+optimizer_cfg:
+  lr: 0.05
+  momentum: 0.9
+  solver: SGD
+  weight_decay: 0.0005
+
+scheduler_cfg:
+  gamma: 0.1
+  milestones: [20000, 40000, 50000]
+  scheduler: MultiStepLR
+
+trainer_cfg:
+  find_unused_parameters: true
+  enable_float16: true
+  fix_BN: false
+  with_test: true
+  log_iter: 100
+  restore_ckpt_strict: true
+  optimizer_reset: false
+  scheduler_reset: false
+  restore_hint: 0
+  save_iter: 10000
+  save_name: MLLMGait_RGBSIL_Qwen_CCPG
+  sync_BN: true
+  total_iter: 60000
+  sampler:
+    batch_shuffle: true
+    batch_size: [8, 8]
+    frames_num_fixed: 30
+    frames_skip_num: 4
+    sample_type: fixed_ordered
+    type: TripletSampler
+  transform:
+    - type: Compose
+      trf_cfg:
+        - type: BaseRgbNormalizeTransform
+          cutting: null
+        - type: RandomHorizontalFlip
+          prob: 0.2
+    - type: Compose
+      trf_cfg:
+        - type: RandomPerspective
+          prob: 0.2
+        - type: BaseSilCuttingTransform
+          img_w: 64
+        - type: RandomHorizontalFlip
+          prob: 0.2
+        - type: RandomRotate
+          prob: 0.2
+    - type: TextFeatureTransform

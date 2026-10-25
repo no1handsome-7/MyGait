@@ -1,0 +1,135 @@
+data_cfg:
+  dataset_name: SUSTech1K
+  dataset_root: your_SUSTech1K_pkl_path
+  dataset_partition: ./datasets/SUSTech1K/SUSTech1K.json
+  # Official SUSTech1K pkl order has 16 files. This selects 13-sync-*-Camera-RGB_raw.pkl (10Hz RGB synchronized to LiDAR).
+  data_in_use: [False, False, False, False, False, False, False, False, False, False, False, False, False, True, False, False]
+  num_workers: 8
+  remove_no_gallery: false
+  test_dataset_name: SUSTech1K
+  cache: false
+
+evaluator_cfg:
+  enable_float16: true
+  restore_ckpt_strict: true
+  restore_hint: 40000
+  save_name: PIGGait_SUSTech1K_SYNC_RGB
+  eval_func: evaluate_indoor_dataset
+  sampler:
+    batch_shuffle: false
+    batch_size: 4
+    sample_type: all_ordered
+    frames_all_limit: 250
+  metric: euc
+  # SUSTech1K raw RGB pkl is [T,H,W,3] uint8, so do not use BaseRgbTransform here.
+  transform:
+    - type: NoOperation
+
+loss_cfg:
+  - loss_term_weight: 1.0
+    margin: 0.2
+    type: TripletLoss
+    log_prefix: triplet
+  - loss_term_weight: 1.0
+    scale: 16
+    type: CrossEntropyLoss
+    log_prefix: softmax
+    log_accuracy: true
+  - loss_term_weight: 0.20
+    scale: 8
+    type: CrossEntropyLoss
+    log_prefix: style_cls
+    log_accuracy: false
+  - loss_term_weight: 0.10
+    scale: 8
+    type: CrossEntropyLoss
+    log_prefix: nuisance_adv
+    log_accuracy: false
+
+model_cfg:
+  model: PIGGait
+  input_normalization: uint8         # model converts HWC/CHW uint8 to ImageNet-normalized CHW
+  nuisance_classes: 8
+  grl_lambda: 1.0
+  rex_ce_scale: 16
+  enable_counterfactual: true
+  loss_weights:
+    phase: 0.10
+    orth: 0.05
+    rex_type: 0.03
+    rex_view: 0.01
+    counterfactual: 0.10
+  rgb_pig_cfg:
+    use_dino: true
+    freeze_dino: true
+    pretrained_lvm: ./pretrained_LVMs/dinov2-small
+    selected_layers: [3, 6, 9, 12]
+    dino_size: [224, 112]
+    field_size: [64, 64]
+    field_channels: 32
+    cycle_shift: 8
+    phase_align: true
+    mask_temperature: 1.0
+    dct_cfg:
+      block_size: 8
+      num_parts: 16
+      init_y_dc: 0.25
+      init_chroma: 0.25
+      init_chroma_dc: 0.05
+      init_high: 0.85
+  backbone_cfg:
+    type: ResNet9
+    block: BasicBlock
+    channels: [64, 128, 256, 512]
+    layers: [1, 1, 1, 1]
+    strides: [1, 2, 2, 1]
+    maxpool: false
+  SeparateFCs:
+    in_channels: 512
+    out_channels: 256
+    parts_num: 16
+  SeparateBNNecks:
+    class_num: 250
+    in_channels: 256
+    parts_num: 16
+  bin_num: [16]
+  reliability_gamma: 0.5
+  mixstyle_cfg:
+    p: 0.5
+    alpha: 0.3
+
+optimizer_cfg:
+  lr: 0.05
+  momentum: 0.9
+  solver: SGD
+  weight_decay: 0.0005
+
+scheduler_cfg:
+  gamma: 0.1
+  milestones: [20000, 32000]
+  scheduler: MultiStepLR
+
+trainer_cfg:
+  find_unused_parameters: true
+  enable_float16: true
+  fix_BN: false
+  with_test: true
+  log_iter: 100
+  restore_ckpt_strict: true
+  restore_hint: 0
+  save_iter: 10000
+  save_name: PIGGait_SUSTech1K_SYNC_RGB
+  sync_BN: true
+  total_iter: 40000
+  sampler:
+    batch_shuffle: true
+    batch_size: [8, 4]
+    frames_num_fixed: 30
+    frames_skip_num: 4
+    sample_type: fixed_ordered
+    type: TripletSampler
+  transform:
+    - type: Compose
+      trf_cfg:
+        - type: RandomHorizontalFlip
+        - type: NoOperation

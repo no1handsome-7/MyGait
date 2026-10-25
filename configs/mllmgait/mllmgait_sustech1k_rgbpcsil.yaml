@@ -1,0 +1,165 @@
+# Deprecated filename kept for compatibility. This config now defaults to RGB + PointCloud + Qwen text, not Silhouette.
+#
+# SUSTech1K contains RGB / PointCloud / Silhouette / Depth and other modalities.
+# For the clothing-change setting in this project, the default input is RGB + PC:
+#   - RGB branch: guided by Qwen2.5-VL motion text to suppress clothing color/texture.
+#   - PC branch: provides 3D body structure and height-part motion cues.
+#   - Silhouette and depth are available in the dataset but disabled by default here.
+#
+# IMPORTANT:
+# OpenGait sorts .pkl files lexicographically inside each sequence folder, then applies data_in_use.
+# With the official SUSTech1K pretreatment script, the synchronized RGB/PC files are usually:
+#   original index 08 -> *sync*-LiDAR-PCDs.pkl, selected as ipts[0]
+#   original index 13 -> *sync*-Camera-RGB_raw.pkl, selected as ipts[1]
+#   appended index 16 -> qwen25vl_motion_feat.pkl, selected as ipts[2]
+# If your processed folder has a different sorted order, update data_in_use and model indices accordingly.
+
+data_cfg:
+  dataset_name: SUSTech1K
+  dataset_root: your_path
+  dataset_partition: ./datasets/SUSTech1K/SUSTech1K.json
+  num_workers: 4
+  # Select synchronized PC, synchronized RGB, and appended Qwen text feature.
+  # Index map under the default SUSTech1K pretreatment:
+  #   00 original PCDs
+  #   05 original RGB_raw
+  #   06/07 original silhouettes
+  #   08 synchronized PCDs
+  #   13 synchronized RGB_raw
+  #   14/15 synchronized silhouettes
+  #   16 qwen25vl_motion_feat.pkl
+  data_in_use: [false, false, false, false, false, false, false, false, true, false, false, false, false, true, false, false, true]
+  remove_no_gallery: false
+  test_dataset_name: SUSTech1K
+
+evaluator_cfg:
+  enable_float16: false
+  restore_ckpt_strict: true
+  restore_hint: 50000
+  save_name: MLLMGait_RGBPC_Qwen_SUSTech1K
+  eval_func: evaluate_indoor_dataset
+  sampler:
+    batch_shuffle: false
+    points_in_use:
+      pointcloud_index: 0
+      points_num: 1024
+    batch_size: 4
+    sample_type: all_ordered
+    frames_all_limit: 720
+  metric: euc
+  transform:
+    - type: PointCloudsTransform
+      xyz_only: true
+      scale_aware: false
+    - type: BaseRgbNormalizeTransform
+      cutting: null
+    - type: TextFeatureTransform
+
+loss_cfg:
+  - loss_term_weight: 1.0
+    margin: 0.2
+    type: TripletLoss
+    log_prefix: triplet
+  - loss_term_weight: 0.5
+    scale: 16
+    type: CrossEntropyLoss
+    log_prefix: softmax
+    log_accuracy: true
+  - loss_term_weight: 0.2
+    type: CrossModalConsistencyLoss
+    log_prefix: xmodal
+  - loss_term_weight: 0.05
+    temperature: 0.07
+    type: TextGuidanceContrastLoss
+    log_prefix: text_align
+
+model_cfg:
+  model: MLLMGait
+  channels: 512
+  dropout: 0.1
+  temporal_heads: 4
+  temporal_layers: 1
+  bin_num: [16]
+
+  # Indices are after data_in_use filtering:
+  #   ipts[0] = PC
+  #   ipts[1] = RGB
+  #   ipts[2] = Qwen text feature
+  pc_index: 0
+  rgb_index: 1
+  sil_index: null
+  text_index: 2
+  text_dim: 3584
+  pc_in_dim: 3
+
+  SeparateFCs:
+    in_channels: 512
+    out_channels: 256
+    parts_num: 16
+  SeparateBNNecks:
+    class_num: 250
+    in_channels: 256
+    parts_num: 16
+
+  cloth_adversary:
+    enabled: true
+    num_clothes: 12
+    lambda: 0.2
+    loss_weight: 0.1
+    patterns:
+      normal: 0
+      coat: 1
+      clothing: 2
+      bag: 3
+      umbrella: 4
+      occlusion: 5
+
+optimizer_cfg:
+  lr: 0.05
+  momentum: 0.9
+  solver: SGD
+  weight_decay: 0.0005
+
+scheduler_cfg:
+  gamma: 0.1
+  milestones: [20000, 35000, 45000]
+  scheduler: MultiStepLR
+
+trainer_cfg:
+  find_unused_parameters: true
+  enable_float16: false
+  fix_BN: false
+  with_test: true
+  log_iter: 100
+  restore_ckpt_strict: true
+  optimizer_reset: false
+  scheduler_reset: false
+  restore_hint: 0
+  save_iter: 10000
+  save_name: MLLMGait_RGBPC_Qwen_SUSTech1K
+  sync_BN: true
+  total_iter: 50000
+  sampler:
+    batch_shuffle: true
+    batch_size: [8, 4]
+    frames_num_fixed: 10
+    sample_type: fixed_unordered
+    type: TripletSampler
+    points_in_use:
+      pointcloud_index: 0
+      points_num: 1024
+  transform:
+    - type: PointCloudsTransform
+      xyz_only: true
+      scale_aware: false
+      scale_prob: 1
+      flip_prob: 0.15
+      shift_prob: 0.1
+      jit_prob: 0.1
+    - type: Compose
+      trf_cfg:
+        - type: BaseRgbNormalizeTransform
+          cutting: null
+        - type: RandomHorizontalFlip
+          prob: 0.2
+    - type: TextFeatureTransform

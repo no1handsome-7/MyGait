@@ -1,0 +1,170 @@
+data_cfg:
+  dataset_name: CCPG
+  dataset_root: /data3/user25/code/OpenGait/data/CCPG-GPFPP-pkl
+  dataset_partition: /data3/user25/code/OpenGait/datasets/CCPG/CCPG.json
+  num_workers: 8
+  remove_no_gallery: false
+  cache: false
+  test_dataset_name: CCPG
+  data_in_use:
+  - true
+  - false
+  - false
+  - false
+  - false
+trainer_cfg:
+  find_unused_parameters: false
+  enable_float16: true
+  with_test: true
+  fix_BN: false
+  log_iter: 100
+  restore_ckpt_strict: true
+  optimizer_reset: false
+  scheduler_reset: false
+  restore_hint: 0
+  save_iter: 5000
+  save_name: 08d_gpfpp_core28_add_internal_phase_channels
+  sync_BN: true
+  total_iter: 40000
+  sampler:
+    type: TripletSampler
+    batch_size:
+    - 8
+    - 4
+    sample_type: fixed_unordered
+    frames_num_fixed: 30
+    frames_num_min: 20
+    frames_num_max: 40
+    frames_skip_num: 0
+    batch_shuffle: true
+  transform:
+  - type: BaseGPFTransform
+evaluator_cfg:
+  restore_hint: 40000
+  eval_func: evaluate_CCPG
+  save_name: 08d_gpfpp_core28_add_internal_phase_channels
+  restore_ckpt_strict: true
+  enable_float16: true
+  sampler:
+    batch_shuffle: false
+    batch_size: 2
+    sample_type: all_ordered
+    frames_all_limit: 720
+    frames_skip_num: 0
+    type: InferenceSampler
+  transform:
+  - type: BaseGPFTransform
+loss_cfg:
+- type: TripletLoss
+  loss_term_weight: 1.0
+  margin: 0.2
+  log_prefix: triplet
+- type: CrossEntropyLoss
+  loss_term_weight: 1.0
+  scale: 16
+  log_prefix: softmax
+  log_accuracy: true
+optimizer_cfg:
+  solver: SGD
+  lr: 0.05
+  momentum: 0.9
+  weight_decay: 0.0005
+scheduler_cfg:
+  scheduler: MultiStepLR
+  milestones:
+  - 15000
+  - 25000
+  - 35000
+  gamma: 0.1
+model_cfg:
+  model: GPFGaitPP
+  variant: gpfpp_structured
+  class_num: 100
+  input_index: 0
+  phase_input_index: null
+  parts_input_index: null
+  source_channels: 28
+  num_parts: 8
+  enable_channel_norm: true
+  inference_use_emb2: false
+  geo_indices:
+  - 0
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+  - 6
+  - 7
+  - 8
+  - 9
+  motion_indices:
+  - 10
+  - 11
+  - 12
+  - 13
+  - 14
+  - 15
+  - 16
+  - 17
+  - 18
+  - 19
+  frequency_indices:
+  - 20
+  - 21
+  - 22
+  - 23
+  affinity_indices:
+  - 24
+  reliability_index: 19
+  periodic_index: 18
+  texture_inverse_index: 25
+  use_primitive_gates: true
+  primitive_gate_strength: 0.75
+  primitive_dropout: 0.05
+  use_phase_film: false
+  stem_out_channels: 48
+  grouped_branch_channels: 16
+  affinity_branch_channels: 12
+  backbone_channels:
+  - 64
+  - 128
+  - 256
+  - 512
+  backbone_strides:
+  - 1
+  - 2
+  - 1
+  - 1
+  blocks_per_stage:
+  - 1
+  - 1
+  - 1
+  - 1
+  temporal_pool: max
+  temporal_topk_ratio: 0.5
+  phase_bins: 8
+  phase_kappa: 4.0
+  use_part_gate: false
+  part_gate_strength: 0.35
+  bin_num:
+  - 32
+  emb_channels: 256
+  SeparateFCs:
+    parts_num: 32
+    in_channels: 512
+    out_channels: 256
+    norm: false
+  SeparateBNNecks:
+    parts_num: 32
+    in_channels: 256
+    class_num: 100
+    norm: true
+  visualize: false
+  visualize_max_frames: 8
+  phase_indices:
+  - 20
+  - 21
+  use_internal_phase: false
+_note: 'Ablation: adds internal phase channels 20/21 as ordinary spatial cues inside
+  frequency branch. No external phase, no PhaseFiLM, no part maps.'

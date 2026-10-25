@@ -1,0 +1,256 @@
+# BeliefGait CCPG configuration: pose-free dynamic view belief tracking.
+# Existing 12-channel 000-gpf.pkl files are used directly. Phase channels [6,7]
+# are lazily discarded at the model boundary. Do not regenerate the GPF dataset.
+
+# IMPORTANT: BeliefGait models frame-to-frame direction changes. Training must
+# preserve temporal order: use fixed_ordered, not fixed_unordered.
+
+data_cfg:
+  dataset_name: CCPG
+  dataset_root: /data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl
+  dataset_partition: /data3/user25/code/OpenGait/datasets/CCPG/CCPG.json
+  num_workers: 8
+  remove_no_gallery: False
+  cache: False
+  test_dataset_name: CCPG
+  data_in_use: [True, False, False, False]  # use only 000-gpf.pkl
+
+trainer_cfg:
+  find_unused_parameters: False
+  enable_float16: True
+  with_test: True
+  fix_BN: False
+  log_iter: 100
+  restore_ckpt_strict: True
+  optimizer_reset: False
+  scheduler_reset: False
+  restore_hint: 0
+  save_iter: 5000
+  save_name: belief_gait_ccpg_full
+  sync_BN: True
+  total_iter: 60000
+  sampler:
+    type: TripletSampler
+    batch_size: [8, 4]
+    sample_type: unfixed_ordered
+    frames_num_fixed: 30
+    frames_num_min: 20
+    frames_num_max: 35
+    frames_skip_num: 0
+    batch_shuffle: True
+  transform:
+    # - type: Compose
+    #   trf_cfg:
+    - type: BaseGPFTransform
+        # - type: RandomHorizontalFlip
+        #   prob: 0.5
+        #   flip_negate_indices: [2, 8]  # raw GPF12: normal_x, flow_dx
+        # - type: RandomErasing
+        #   prob: 0.25
+        #   area_ratio_range: [0.02, 0.10]
+        #   aspect_ratio_range: [0.3, 3.3]
+        #   frame_ratio_range: [0.5, 1.0]
+
+evaluator_cfg:
+  restore_hint: 60000
+  eval_func: evaluate_CCPG
+  save_name: belief_gait_ccpg_full
+  restore_ckpt_strict: True
+  enable_float16: True
+  sampler:
+    batch_shuffle: False
+    batch_size: 2  # equals GPU number in OpenGait test mode
+    sample_type: all_ordered
+    frames_all_limit: 720
+    frames_skip_num: 0
+    type: InferenceSampler
+  transform:
+    - type: BaseGPFTransform
+
+loss_cfg:
+  - type: TripletLoss
+    loss_term_weight: 1.0
+    margin: 0.2
+    log_prefix: triplet
+  - type: CrossEntropyLoss
+    loss_term_weight: 1.0
+    scale: 16
+    log_prefix: softmax
+    log_accuracy: True
+
+  # Relative latent-view supervision: no fabricated absolute angle label.
+  - type: BeliefCycleConsistencyLoss
+    loss_term_weight: 0.06
+    log_prefix: belief_cycle
+  - type: BeliefFlipEquivarianceLoss
+    loss_term_weight: 0.04
+    log_prefix: belief_flip
+  - type: BeliefRegularizationLoss
+    loss_term_weight: 0.04
+    entropy_min: 0.10
+    entropy_max: 0.82
+    observation_entropy_weight: 0.20
+    belief_entropy_weight: 0.20
+    batch_balance_weight: 0.05
+    stable_smooth_weight: 0.15
+    log_prefix: belief_reg
+  - type: ActionGateSelfSupervisionLoss
+    loss_term_weight: 0.05
+    balance_weight: 0.05
+    entropy_weight: 0.01
+    log_prefix: action_selfsup
+  - type: MemoryCoverageLoss
+    loss_term_weight: 0.03
+    redundancy_weight: 1.0
+    write_weight: 0.10
+    usage_weight: 0.10
+    target_write_rate: 0.35
+    log_prefix: memory_reg
+  - type: PrimitiveTransportRegularizationLoss
+    loss_term_weight: 0.04
+    diversity_weight: 1.0
+    covariance_weight: 0.25
+    offset_weight: 0.20
+    affine_weight: 0.20
+    gate_weight: 0.02
+    covariance_min: 0.008
+    covariance_max: 0.60
+    log_prefix: transport_reg
+  - type: CanonicalConsistencyLoss
+    loss_term_weight: 0.04
+    log_prefix: canonical_consistency
+
+  # Camera tags such as 06_0 are categories, never angles. This adversary uses
+  # them only to remove camera shortcuts from the final identity embedding.
+  - type: MaskedCrossEntropyLoss
+    loss_term_weight: 0.04
+    log_prefix: camera_adv
+
+optimizer_cfg:
+  solver: Adam
+  lr: 0.0003
+  weight_decay: 0.0005
+  momentum: 0.9
+
+scheduler_cfg:
+  scheduler: MultiStepLR
+  milestones: [20000, 40000, 50000]
+  gamma: 0.1
+
+model_cfg:
+  model: BeliefGait
+  class_num: 100  # replace with your CCPG train identity count
+  input_index: 0
+  inference_use_emb2: False
+
+  # Existing raw GPF12 -> lazy compact GPF10. No offline conversion.
+  source_channels: 12
+  input_channel_indices: [0, 1, 2, 3, 4, 5, 8, 9, 10, 11]
+  enable_channel_norm: True
+  geo_indices: [0, 1, 2, 3, 4]
+  motion_indices: [5, 6, 7]
+  reliability_index: 8
+  use_residual_branch: True
+  residual_indices: [9]
+  input_residual_scale: 0.5
+
+  # Conservative typed encoder.
+  stem_out_channels: 32
+  grouped_branch_channels: 20
+  residual_branch_channels: 8
+  use_reliability_gate: True
+  reliability_gate_strength: 0.75
+  primitive_dropout: 0.03
+  backbone_channels: [64, 128, 256, 512]
+  backbone_strides: [1, 2, 2, 1]
+  blocks_per_stage: [1, 1, 1, 1]
+  bin_num: [32]
+  emb_channels: 256
+  SeparateFCs:
+    parts_num: 32
+    in_channels: 512
+    out_channels: 256
+  SeparateBNNecks:
+    parts_num: 32
+    in_channels: 256
+    class_num: 100
+
+  # Module switches: every block can be independently ablated.
+  enable_framewise_view_belief: True
+  enable_relative_view_transition: True
+  enable_circular_belief_filter: True
+  enable_action_gate: True
+  enable_direction_key_memory: True
+  enable_residual_primitive_transport: True
+  enable_internal_flip_consistency: True
+
+  # Circular belief tracker. Bins are latent relative directions, not fake angles.
+  num_direction_bins: 8
+  descriptor_dim: 96
+  descriptor_hidden_channels: 48
+  belief_hidden_channels: 96
+  belief_temperature: 1.0
+  action_hidden_channels: 48
+
+  # Data-driven Gaussian evidence primitives; not hand-crafted body parts.
+  num_primitives: 8
+  primitive_min_variance: 0.01
+  primitive_evidence_floor: 0.05
+
+  # Low-freedom residual transport; final projection starts from zero.
+  transport_dim: 96
+  transport_max_affine_delta: 0.15
+  transport_max_offset: 0.10
+  transport_residual_strength: 0.50
+  transport_uncertainty_floor: 0.15
+  enable_context_transport_delta: True
+  transport_context_rank: 16
+
+  # Small online memory: aligned and complementary reads.
+  memory_num_slots: 8
+  memory_latent_key_dim: 64
+  memory_value_dim: 96
+  memory_direction_weight: 0.75
+  memory_aligned_topk: 3
+  memory_complementary_topk: 2
+  memory_residual_strength: 0.40
+  memory_usage_decay: 0.90
+  memory_write_threshold: 0.10
+  memory_novelty_threshold: 0.18
+  memory_bptt_steps: 4  # truncate recurrent graph; set 0 only after profiling
+
+  # Preserve max-pool baseline and inject only a small action-aware mean residual.
+  identity_mean_residual_strength: 0.20
+
+  # Camera labels are weak categorical metadata. Main experiment is tag-free in
+  # the forward path: weak prior and camera adapter remain disabled.
+  camera_num_classes: 16
+  camera_label_parse_mode: ccpg_prefix
+  camera_label_map: {}
+  camera_index_offset: 0
+  enable_camera_weak_prior: False
+  camera_prior_floor: 0.40
+  camera_prior_temperature: 1.5
+  enable_camera_adapter: False
+  camera_embedding_dim: 16
+  camera_adapter_strength: 0.15
+  camera_dropout: 0.50
+
+  # Training-only camera shortcut blocker.
+  enable_camera_adversary: True
+  camera_adversary_grl_strength: 0.20
+  camera_adversary_hidden: 128
+  camera_adversary_dropout: 0.10
+
+  # Keep synchronized with loss_cfg.
+  enable_belief_cycle_loss: True
+  enable_belief_regularization: True
+  enable_action_selfsup_loss: True
+  enable_memory_regularization: True
+  enable_transport_regularization: True
+  enable_canonical_consistency: True
+
+  # Diagnostics only.
+  visualize: False
+  visualize_max_frames: 8
+  export_belief_state: False

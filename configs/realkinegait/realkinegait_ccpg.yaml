@@ -1,0 +1,134 @@
+data_cfg:
+  dataset_name: CCPG
+  dataset_root: ./data/RealKineGait/CCPG
+  dataset_partition: ./datasets/CCPG/CCPG.json
+  # Expected sorted files per sequence:
+  # 00-rgb.pkl 01-sil.pkl 02-pose.pkl 03-motion_text.pkl 04-nuisance_text.pkl 05-smpl.pkl
+  data_in_use: [true, true, true, true, true, true]
+  num_workers: 8
+  remove_no_gallery: false
+  test_dataset_name: CCPG
+
+evaluator_cfg:
+  enable_float16: true
+  restore_ckpt_strict: false
+  restore_hint: 0
+  save_name: RealKineGait_CCPG
+  eval_func: evaluate_CCPG
+  sampler:
+    batch_shuffle: false
+    batch_size: 4
+    sample_type: all_ordered
+    frames_all_limit: 240
+  metric: euc
+  transform:
+    - type: BaseRgbTransform
+    - type: BaseSilCuttingTransform
+    - type: PoseSequenceTransform
+    - type: BaseFeatureTransform
+    - type: BaseFeatureTransform
+    - type: BaseFeatureTransform
+
+loss_cfg:
+  - type: TripletLoss
+    log_prefix: triplet
+    loss_term_weight: 1.0
+    margin: 0.2
+  - type: CrossEntropyLoss
+    log_prefix: softmax
+    loss_term_weight: 1.0
+    scale: 16
+    log_accuracy: true
+  - type: ConditionalDecorrelationLoss
+    log_prefix: cd
+    loss_term_weight: 0.03
+    conditional_weight: 0.5
+  - type: MotionAlignmentLoss
+    log_prefix: motion_align
+    loss_term_weight: 0.05
+    temperature: 0.07
+  - type: CounterfactualConsistencyLoss
+    log_prefix: counterfactual
+    loss_term_weight: 0.05
+    temperature: 0.2
+  - type: PhaseConsistencyLoss
+    log_prefix: phase
+    loss_term_weight: 0.01
+    foot_indices: [7, 8]
+  - type: PrivilegedDistillationLoss
+    log_prefix: distill3d
+    loss_term_weight: 0.02
+
+model_cfg:
+  model: RealKineGait
+  lvm_name_or_path: ./pretrained_LVMs/dinov2-small
+  freeze_lvm: true
+  lvm_dim: 384
+  lvm_layers: [3, 7, 11]
+  image_hw: [224, 112]
+  feature_hw: [32, 16]
+  adapter_dim: 256
+  parts_num: 10
+  foot_indices: [7, 8]
+  kinematic_depth: 2
+  kinematic_heads: 4
+  graph_bias_strength: 0.25
+  text_dim: 512
+  smpl_dim: 256
+  input_indices:
+    rgb: 0
+    sil: 1
+    pose: 2
+    motion_text: 3
+    nuisance_text: 4
+    smpl: 5
+  SeparateFCs:
+    in_channels: 256
+    out_channels: 256
+  SeparateBNNecks:
+    class_num: 100
+    in_channels: 256
+  bin_num: [16, 8, 4, 2, 1]
+
+optimizer_cfg:
+  solver: AdamW
+  lr: 0.0002
+  weight_decay: 0.05
+
+scheduler_cfg:
+  scheduler: CosineAnnealingLR
+  T_max: 60000
+  eta_min: 0.000001
+
+trainer_cfg:
+  find_unused_parameters: true
+  enable_float16: true
+  fix_BN: false
+  log_iter: 100
+  with_test: true
+  restore_ckpt_strict: false
+  restore_hint: 0
+  save_iter: 10000
+  save_name: RealKineGait_CCPG
+  sync_BN: true
+  total_iter: 60000
+  sampler:
+    type: TripletSampler
+    batch_shuffle: true
+    batch_size: [8, 4]
+    frames_num_fixed: 30
+    frames_skip_num: 4
+    sample_type: fixed_ordered
+  transform:
+    - type: Compose
+      trf_cfg:
+        - type: RandomHorizontalFlip
+        - type: BaseRgbTransform
+    - type: Compose
+      trf_cfg:
+        - type: RandomHorizontalFlip
+        - type: BaseSilCuttingTransform
+    - type: PoseSequenceTransform
+    - type: BaseFeatureTransform
+    - type: BaseFeatureTransform
+    - type: BaseFeatureTransform

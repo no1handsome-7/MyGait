@@ -1,0 +1,156 @@
+data_cfg:
+  dataset_name: CCPG
+  dataset_root: /data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl
+  dataset_partition: /data3/user25/code/OpenGait/datasets/CCPG/CCPG.json
+  num_workers: 8
+  remove_no_gallery: false
+  cache: false
+  test_dataset_name: CCPG
+  data_in_use:
+  - true
+  - false
+  - false
+  - false
+trainer_cfg:
+  find_unused_parameters: true
+  enable_float16: true
+  with_test: true
+  fix_BN: false
+  log_iter: 100
+  restore_ckpt_strict: false
+  optimizer_reset: false
+  scheduler_reset: false
+  restore_hint: 0
+  save_iter: 5000
+  save_name: struct_gait_view_only
+  sync_BN: true
+  total_iter: 40000
+  sampler:
+    type: TripletSampler
+    batch_size:
+    - 8
+    - 4
+    sample_type: fixed_unordered
+    frames_num_fixed: 30
+    frames_num_min: 20
+    frames_num_max: 40
+    frames_skip_num: 0
+    batch_shuffle: true
+  transform:
+  # - type: BaseGPFTransform
+    - type: Compose
+      trf_cfg:
+        - type: BaseGPFTransform
+        - type: RandomHorizontalFlip
+          prob: 0.5
+          flip_negate_indices: [2, 8]
+        - type: RandomErasing
+          prob: 0.3
+          area_ratio_range: [0.02, 0.12]
+          aspect_ratio_range: [0.3, 3.3]
+evaluator_cfg:
+  restore_hint: 40000
+  eval_func: evaluate_CCPG
+  save_name: struct_gait_view_only
+  restore_ckpt_strict: false
+  enable_float16: true
+  sampler:
+    batch_shuffle: false
+    batch_size: 2
+    sample_type: all_ordered
+    frames_all_limit: 720
+    frames_skip_num: 0
+    type: InferenceSampler
+  transform:
+  - type: BaseGPFTransform
+loss_cfg:
+- type: TripletLoss
+  loss_term_weight: 1.0
+  margin: 0.2
+  log_prefix: triplet
+- type: CrossEntropyLoss
+  loss_term_weight: 1.0
+  scale: 16
+  label_smooth: true
+  eps: 0.1
+  log_prefix: softmax
+  log_accuracy: true
+optimizer_cfg:
+  solver: Adam
+  lr: 0.0003
+  weight_decay: 0.0005
+  momentum: 0.9
+scheduler_cfg:
+  scheduler: MultiStepLR
+  milestones:
+  - 15000
+  - 25000
+  - 35000
+  gamma: 0.1
+model_cfg:
+  model: StructGait
+  class_num: 100
+  input_index: 0
+  source_channels: 12
+  enable_channel_norm: true
+  geo_indices:
+  - 0
+  - 1
+  - 2
+  - 3
+  - 4
+  motion_indices:
+  - 5
+  - 8
+  - 9
+  reliability_index: 10
+  residual_indices:
+  - 11
+  stem_out_channels: 32
+  grouped_branch_channels: 24
+  residual_branch_channels: 12
+  use_reliability_gate: true
+  reliability_gate_strength: 0.75
+  primitive_dropout: 0.05
+  backbone_channels:
+  - 64
+  - 128
+  - 256
+  - 512
+  backbone_strides:
+  - 1
+  - 2
+  - 2
+  - 1
+  blocks_per_stage:
+  - 1
+  - 1
+  - 1
+  - 1
+  bin_num:
+  - 32
+  emb_channels: 256
+  emb_channels_rope: 512
+  temporal_pool: max
+  inference_use_emb2: false
+  SeparateFCs:
+    parts_num: 32
+    in_channels: 512
+    out_channels: 256
+  SeparateBNNecks:
+    parts_num: 32
+    in_channels: 256
+    class_num: 100
+  enable_view_module: true
+  enable_phase_module: false
+  enable_multiscale_module: false
+  view_hidden_dim: 128
+  view_attn_hidden: 32
+  phase_hidden_dim: 64
+  phase_num_harmonics: 4
+  num_phase_bins: 8
+  phase_kappa: 4.0
+  aux_weight_view: 0.05 #0.001
+  aux_weight_phase: 0.05 #0.001
+  aux_warmup_start: 0 #5000
+  aux_warmup_end: 5000 #10000

@@ -1,0 +1,293 @@
+data_cfg:
+  dataset_name: LongRange
+  dataset_root: /data3/user25/dataset-make/gait/OpenGait/data/LRGait
+  dataset_partition: /data3/user25/dataset-make/gait/OpenGait/datasets/LongRange/LongRange.json
+  num_workers: 4
+  data_in_use:
+  - true   # point cloud
+  - false
+  - true   # RGB
+  - false
+  - true   # qwen25vl_clothing_feat.pkl
+  - true   # qwen25vl_carrying_feat.pkl
+  - true   # qwen25vl_background_feat.pkl
+  - true   # qwen25vl_occlusion_feat.pkl
+  - true   # qwen25vl_clothing_mask.pkl
+  - true   # qwen25vl_carrying_mask.pkl
+  - false  # caption
+  - true   # qwen25vl_background_mask.pkl
+  - true   # qwen25vl_occlusion_mask.pkl
+  remove_no_gallery: false
+  test_dataset_name: LongRange
+  cache: false
+
+loss_cfg:
+- loss_term_weight: 1.0
+  margin: 0.2
+  type: TripletLoss
+  log_prefix: triplet
+- loss_term_weight: 1.0
+  scale: 16
+  type: CrossEntropyLoss
+  log_prefix: softmax
+  log_accuracy: true
+- loss_term_weight: 1.0
+  type: ScalarLoss
+  log_prefix: cqgait_aux
+
+model_cfg:
+  model: CQGaitMoE
+  channels: 256
+  parts_num: 16
+  rgb_index: 1
+  pc_index: 0
+  text_dim: 3584
+  pc_in_dim: 3
+  use_scalar_aux_loss: true
+
+  rgb_backbone:
+    type: tiny
+    # For stronger but heavier experiments:
+    # type: timm
+    # model_name: vit_base_patch14_dinov2.lvd142m
+    # pretrained: true
+    # freeze: true
+
+  text_adapter:
+    input_dim: 3584
+    code_dim: 256
+    hidden_dim: 1024
+    dropout: 0.1
+
+  text_guidance:
+    positive_gate_enabled: true
+    nuisance_detach_enabled: true
+    aux_loss_enabled: true
+
+  positive_text:
+    text_dim: 3584
+    text_code_dim: 256
+    text_hidden_dim: 1024
+    prompt_feat_path: tools/gaitoracle/gait_positive_prompt_feat.npy
+    num_prompts: 4
+    trainable: false
+    dropout: 0.1
+
+  condition_quality:
+    enabled: true
+    stats_dim: 20
+    cond_dim: 128
+    hidden_dim: 256
+    dropout: 0.1
+    norm_momentum: 0.01
+    use_condition_heads: true
+    stat_quality_weight: 0.02
+    oracle_quality_weight: 0.05
+    condition_loss_weight: 0.05
+    branch_identity_weight: 0.15
+    oracle_temperature: 1.0
+
+  moe:
+    appearance:
+      enabled: true
+      num_experts: 8
+      top_k: 2
+      heads: 4
+      dropout: 0.05
+      router_hidden: 256
+      router_temperature: 1.0
+      balance_weight: 0.01
+      load_weight: 0.01
+      diversity_weight: 0.002
+      z_loss_weight: 0.0001
+    structure:
+      enabled: true
+      num_experts: 8
+      top_k: 2
+      heads: 4
+      dropout: 0.05
+      router_hidden: 256
+      router_temperature: 1.0
+      balance_weight: 0.01
+      load_weight: 0.01
+      diversity_weight: 0.002
+      z_loss_weight: 0.0001
+    fusion:
+      enabled: true
+      num_experts: 8
+      top_k: 2
+      heads: 4
+      dropout: 0.05
+      router_hidden: 256
+      router_temperature: 1.0
+      balance_weight: 0.02
+      load_weight: 0.02
+      diversity_weight: 0.003
+      router_quality_weight: 0.01
+      z_loss_weight: 0.0001
+
+  projector:
+    dropout: 0.0
+
+  early_fusion:
+    dropout: 0.05
+
+  cycle_temporal:
+    enabled: true
+    heads: 4
+    layers: 1
+    dropout: 0.1
+    future_pred: true
+    fallback: max_pool
+
+  nuisance_indices:
+    background: 2
+    carrying: 4
+    clothing: 6
+    occlusion: 8
+  nuisance_mask_indices:
+    background: 3
+    carrying: 5
+    clothing: 7
+    occlusion: 9
+  nuisance_detach:
+    enabled: true
+    text_dim: 3584
+    text_code_dim: 256
+    text_hidden_dim: 1024
+    sub_dim: 256
+    grl_lambda: 0.08
+    temperature: 0.07
+    warmup_iters: 5000
+    probe_iters: 10000
+    adv_ramp_iters: 10000
+    reliability_start_iter: 15000
+    reliability_ramp_iters: 10000
+    probe_loss_weight: 0.03
+    adv_loss_weight: 0.03
+    mask_loss_weight: 0.015
+    max_suppression: 0.35
+    detach_reliability_gate: true
+    dropout: 0.1
+    factors:
+    - clothing
+    - carrying
+    - background
+    - occlusion
+    factor_weights:
+      clothing: 1.0
+      carrying: 1.0
+      background: 0.6
+      occlusion: 1.0
+
+  rgb_anchor_weight: 0.05
+  future_weight: 0.01
+  verifier:
+    attention_weight: 0.0
+
+  SeparateFCs:
+    in_channels: 256
+    out_channels: 256
+    parts_num: 16
+  SeparateBNNecks:
+    class_num: 50
+    in_channels: 256
+    parts_num: 16
+
+optimizer_cfg:
+  # lr: 0.05
+  # momentum: 0.9
+  # solver: SGD
+  # weight_decay: 0.0005
+  solver: Adam
+  lr: 0.0001
+  weight_decay: 0.0005
+  momentum: 0.9
+
+scheduler_cfg:
+  gamma: 0.1
+  milestones:
+  - 10000
+  - 20000
+  scheduler: MultiStepLR
+
+trainer_cfg:
+  find_unused_parameters: true
+  enable_float16: true
+  fix_BN: false
+  with_test: true
+  log_iter: 100
+  restore_ckpt_strict: true
+  optimizer_reset: false
+  scheduler_reset: false
+  restore_hint: 0
+  save_iter: 5000
+  save_name: CQGaitMoE_RGBPC_SUSTech1K
+  sync_BN: true
+  total_iter: 30000
+  sampler:
+    batch_shuffle: true
+    batch_size:
+    - 8
+    - 4
+    frames_num_fixed: 10
+    sample_type: fixed_unordered
+    type: TripletSampler
+    points_in_use:
+      pointcloud_index: 0
+      points_num: 256
+  transform:
+  - type: PointCloudsTransform
+    xyz_only: true
+    scale_aware: true
+    scale_prob: 1
+    flip_prob: 0.15
+    shift_prob: 0.1
+    jit_prob: 0.1
+    # scale_prob: 0.5
+    # flip_prob: 0.1
+    # shift_prob: 0.05
+    # jit_prob: 0.03
+  - type: BaseRgbNormalizeTransform
+  - type: TextFeatureTransform     # ipts[2] background feat
+  - type: NuisanceMaskTransform    # ipts[3] background mask
+  - type: TextFeatureTransform     # ipts[4] carrying feat
+  - type: NuisanceMaskTransform    # ipts[5] carrying mask
+  - type: TextFeatureTransform     # ipts[6] clothing feat
+  - type: NuisanceMaskTransform    # ipts[7] clothing mask
+  - type: TextFeatureTransform     # ipts[8] occlusion feat
+  - type: NuisanceMaskTransform    # ipts[9] occlusion mask
+
+evaluator_cfg:
+  enable_float16: true
+  restore_ckpt_strict: true
+  restore_hint: 30000
+  save_name: CQGaitMoE_RGBPC_SUSTech1K
+  eval_func: evaluate_indoor_dataset
+  sampler:
+    batch_shuffle: false
+    points_in_use:
+      pointcloud_index: 0
+      points_num: 256
+    batch_size: 1
+    frames_num_fixed: 10
+    frames_skip_num: 0
+    sample_type: all_ordered
+    frames_all_limit: 720
+  metric: euc
+  transform:
+  - type: PointCloudsTransform
+    xyz_only: true
+    scale_aware: true
+    # scale_prob: 1
+    # flip_prob: 0.15
+    points_num: 256
+  - type: BaseRgbNormalizeTransform
+  - type: TextFeatureTransform
+  - type: NuisanceMaskTransform
+  - type: TextFeatureTransform
+  - type: NuisanceMaskTransform
+  - type: TextFeatureTransform
+  - type: NuisanceMaskTransform
+  - type: TextFeatureTransform
+  - type: NuisanceMaskTransform

@@ -1,0 +1,384 @@
+{
+  "root": "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl",
+  "filename": "000-gpf.pkl",
+  "total_sequences": 16365,
+  "num_views": 37,
+  "view_values": [
+    "01_0",
+    "01_1",
+    "01_2",
+    "01_3",
+    "01_4",
+    "01_5",
+    "01_6",
+    "01_7",
+    "01_8",
+    "01_9",
+    "01_10",
+    "01_11",
+    "01_12",
+    "01_13",
+    "01_14",
+    "01_15",
+    "02_0",
+    "02_1",
+    "02_2",
+    "02_3",
+    "03_0",
+    "03_1",
+    "04_0",
+    "04_1",
+    "05_0",
+    "06_0",
+    "07_0",
+    "07_1",
+    "07_2",
+    "07_3",
+    "08_0",
+    "08_1",
+    "09_0",
+    "09_1",
+    "09_2",
+    "10_0",
+    "10_1"
+  ],
+  "views": [
+    {
+      "view": "01_0",
+      "count": 1396,
+      "examples": [
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/000/U0_D0/01_0/000-gpf.pkl",
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/000/U0_D0_BG/01_0/000-gpf.pkl",
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/000/U0_D3/01_0/000-gpf.pkl"
+      ]
+    },
+    {
+      "view": "01_1",
+      "count": 54,
+      "examples": [
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/011/U1_D0/01_1/000-gpf.pkl",
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/018/U3_D3/01_1/000-gpf.pkl",
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/022/U1_D0/01_1/000-gpf.pkl"
+      ]
+    },
+    {
+      "view": "01_2",
+      "count": 8,
+      "examples": [
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/011/U1_D0/01_2/000-gpf.pkl",
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/095/U0_D0_BG/01_2/000-gpf.pkl",
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/095/U0_D3/01_2/000-gpf.pkl"
+      ]
+    },
+    {
+      "view": "01_3",
+      "count": 5,
+      "examples": [
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/095/U0_D0_BG/01_3/000-gpf.pkl",
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/095/U0_D3/01_3/000-gpf.pkl",
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/096/U1_D1/01_3/000-gpf.pkl"
+      ]
+    },
+    {
+      "view": "01_4",
+      "count": 3,
+      "examples": [
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/095/U0_D0_BG/01_4/000-gpf.pkl",
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/121/U0_D0_BG/01_4/000-gpf.pkl",
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/126/U2_D2/01_4/000-gpf.pkl"
+      ]
+    },
+    {
+      "view": "01_5",
+      "count": 2,
+      "examples": [
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/121/U0_D0_BG/01_5/000-gpf.pkl",
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/126/U2_D2/01_5/000-gpf.pkl"
+      ]
+    },
+    {
+      "view": "01_6",
+      "count": 1,
+      "examples": [
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/126/U2_D2/01_6/000-gpf.pkl"
+      ]
+    },
+    {
+      "view": "01_7",
+      "count": 1,
+      "examples": [
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/126/U2_D2/01_7/000-gpf.pkl"
+      ]
+    },
+    {
+      "view": "01_8",
+      "count": 1,
+      "examples": [
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/126/U2_D2/01_8/000-gpf.pkl"
+      ]
+    },
+    {
+      "view": "01_9",
+      "count": 1,
+      "examples": [
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/126/U2_D2/01_9/000-gpf.pkl"
+      ]
+    },
+    {
+      "view": "01_10",
+      "count": 1,
+      "examples": [
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/126/U2_D2/01_10/000-gpf.pkl"
+      ]
+    },
+    {
+      "view": "01_11",
+      "count": 1,
+      "examples": [
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/126/U2_D2/01_11/000-gpf.pkl"
+      ]
+    },
+    {
+      "view": "01_12",
+      "count": 1,
+      "examples": [
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/126/U2_D2/01_12/000-gpf.pkl"
+      ]
+    },
+    {
+      "view": "01_13",
+      "count": 1,
+      "examples": [
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/126/U2_D2/01_13/000-gpf.pkl"
+      ]
+    },
+    {
+      "view": "01_14",
+      "count": 1,
+      "examples": [
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/126/U2_D2/01_14/000-gpf.pkl"
+      ]
+    },
+    {
+      "view": "01_15",
+      "count": 1,
+      "examples": [
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/126/U2_D2/01_15/000-gpf.pkl"
+      ]
+    },
+    {
+      "view": "02_0",
+      "count": 1397,
+      "examples": [
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/000/U0_D0/02_0/000-gpf.pkl",
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/000/U0_D0_BG/02_0/000-gpf.pkl",
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/000/U0_D3/02_0/000-gpf.pkl"
+      ]
+    },
+    {
+      "view": "02_1",
+      "count": 8,
+      "examples": [
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/046/U0_D3/02_1/000-gpf.pkl",
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/088/U0_D0_BG/02_1/000-gpf.pkl",
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/091/U0_D0/02_1/000-gpf.pkl"
+      ]
+    },
+    {
+      "view": "02_2",
+      "count": 2,
+      "examples": [
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/046/U0_D3/02_2/000-gpf.pkl",
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/123/U0_D0_BG/02_2/000-gpf.pkl"
+      ]
+    },
+    {
+      "view": "02_3",
+      "count": 1,
+      "examples": [
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/123/U0_D0_BG/02_3/000-gpf.pkl"
+      ]
+    },
+    {
+      "view": "03_0",
+      "count": 1399,
+      "examples": [
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/000/U0_D0/03_0/000-gpf.pkl",
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/000/U0_D0_BG/03_0/000-gpf.pkl",
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/000/U0_D3/03_0/000-gpf.pkl"
+      ]
+    },
+    {
+      "view": "03_1",
+      "count": 2,
+      "examples": [
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/091/U0_D0/03_1/000-gpf.pkl",
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/177/U1_D0/03_1/000-gpf.pkl"
+      ]
+    },
+    {
+      "view": "04_0",
+      "count": 1399,
+      "examples": [
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/000/U0_D0/04_0/000-gpf.pkl",
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/000/U0_D0_BG/04_0/000-gpf.pkl",
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/000/U0_D3/04_0/000-gpf.pkl"
+      ]
+    },
+    {
+      "view": "04_1",
+      "count": 2,
+      "examples": [
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/004/U1_D0/04_1/000-gpf.pkl",
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/177/U1_D0/04_1/000-gpf.pkl"
+      ]
+    },
+    {
+      "view": "05_0",
+      "count": 1399,
+      "examples": [
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/000/U0_D0/05_0/000-gpf.pkl",
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/000/U0_D0_BG/05_0/000-gpf.pkl",
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/000/U0_D3/05_0/000-gpf.pkl"
+      ]
+    },
+    {
+      "view": "06_0",
+      "count": 1399,
+      "examples": [
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/000/U0_D0/06_0/000-gpf.pkl",
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/000/U0_D0_BG/06_0/000-gpf.pkl",
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/000/U0_D3/06_0/000-gpf.pkl"
+      ]
+    },
+    {
+      "view": "07_0",
+      "count": 1399,
+      "examples": [
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/000/U0_D0/07_0/000-gpf.pkl",
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/000/U0_D0_BG/07_0/000-gpf.pkl",
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/000/U0_D3/07_0/000-gpf.pkl"
+      ]
+    },
+    {
+      "view": "07_1",
+      "count": 1399,
+      "examples": [
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/000/U0_D0/07_1/000-gpf.pkl",
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/000/U0_D0_BG/07_1/000-gpf.pkl",
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/000/U0_D3/07_1/000-gpf.pkl"
+      ]
+    },
+    {
+      "view": "07_2",
+      "count": 319,
+      "examples": [
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/000/U0_D0/07_2/000-gpf.pkl",
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/000/U1_D1/07_2/000-gpf.pkl",
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/001/U2_D2/07_2/000-gpf.pkl"
+      ]
+    },
+    {
+      "view": "07_3",
+      "count": 2,
+      "examples": [
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/075/U0_D0_BG/07_3/000-gpf.pkl",
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/153/U3_D3/07_3/000-gpf.pkl"
+      ]
+    },
+    {
+      "view": "08_0",
+      "count": 1399,
+      "examples": [
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/000/U0_D0/08_0/000-gpf.pkl",
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/000/U0_D0_BG/08_0/000-gpf.pkl",
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/000/U0_D3/08_0/000-gpf.pkl"
+      ]
+    },
+    {
+      "view": "08_1",
+      "count": 1,
+      "examples": [
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/004/U1_D1/08_1/000-gpf.pkl"
+      ]
+    },
+    {
+      "view": "09_0",
+      "count": 1399,
+      "examples": [
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/000/U0_D0/09_0/000-gpf.pkl",
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/000/U0_D0_BG/09_0/000-gpf.pkl",
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/000/U0_D3/09_0/000-gpf.pkl"
+      ]
+    },
+    {
+      "view": "09_1",
+      "count": 542,
+      "examples": [
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/000/U1_D1/09_1/000-gpf.pkl",
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/002/U0_D0/09_1/000-gpf.pkl",
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/002/U1_D0/09_1/000-gpf.pkl"
+      ]
+    },
+    {
+      "view": "09_2",
+      "count": 6,
+      "examples": [
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/011/U2_D2/09_2/000-gpf.pkl",
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/053/U1_D1/09_2/000-gpf.pkl",
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/088/U0_D3/09_2/000-gpf.pkl"
+      ]
+    },
+    {
+      "view": "10_0",
+      "count": 1399,
+      "examples": [
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/000/U0_D0/10_0/000-gpf.pkl",
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/000/U0_D0_BG/10_0/000-gpf.pkl",
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/000/U0_D3/10_0/000-gpf.pkl"
+      ]
+    },
+    {
+      "view": "10_1",
+      "count": 14,
+      "examples": [
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/008/U1_D0/10_1/000-gpf.pkl",
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/040/U0_D0/10_1/000-gpf.pkl",
+        "/data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl/059/U0_D0/10_1/000-gpf.pkl"
+      ]
+    }
+  ],
+  "num_subjects": 200,
+  "num_sequence_types": 7,
+  "sequence_types": [
+    {
+      "type": "U0_D0",
+      "count": 2325
+    },
+    {
+      "type": "U0_D0_BG",
+      "count": 2331
+    },
+    {
+      "type": "U0_D3",
+      "count": 2328
+    },
+    {
+      "type": "U1_D0",
+      "count": 2347
+    },
+    {
+      "type": "U1_D1",
+      "count": 2356
+    },
+    {
+      "type": "U2_D2",
+      "count": 2340
+    },
+    {
+      "type": "U3_D3",
+      "count": 2338
+    }
+  ],
+  "bad_paths": []
+}

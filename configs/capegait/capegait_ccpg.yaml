@@ -1,0 +1,114 @@
+# CAPEGait on CCPG
+# Put this file into: OpenGait/configs/cape_gait/cape_gait_ccpg.yaml
+data_cfg:
+  dataset_name: CCPG
+  dataset_root: /data3/user25/code/OpenGait/data/CCPG_processed
+  dataset_partition: ./datasets/CCPG/CCPG.json
+  # Expected order: RGB stream, silhouette stream.
+  # If you use BigGait-style rgb pretreatment with ratios as the second stream,
+  # regenerate the pkl files so that silhouettes are the second stream, or add ratios as a third stream.
+  data_in_use: [False, False, True, True]
+  num_workers: 8
+  remove_no_gallery: false
+  test_dataset_name: CCPG
+
+evaluator_cfg:
+  enable_float16: true
+  restore_ckpt_strict: true
+  restore_hint: 40000
+  save_name: CAPEGait_CCPG
+  eval_func: evaluate_CCPG
+  sampler:
+    batch_shuffle: false
+    batch_size: 4
+    sample_type: all_ordered
+    frames_all_limit: 720
+  metric: euc
+  transform:
+    - type: BaseRgbTransform
+    - type: BaseSilTransform
+
+loss_cfg:
+  - type: TripletLoss
+    log_prefix: triplet
+    margin: 0.2
+    loss_term_weight: 1.0
+  - type: CrossEntropyLoss
+    log_prefix: softmax
+    scale: 16
+    loss_term_weight: 1.0
+    log_accuracy: true
+
+model_cfg:
+  model: CAPEGait
+  pretrained_lvm: ./checkpoints/dinov2-small
+  # RGB/SIL are 128x128. Keep square resizing to avoid aspect-ratio distortion.
+  lvm_hw: [224, 224]
+  repr_hw: [64, 64]
+  image_size: 224   # fallback only
+  sils_size: 32     # fallback only
+  source_dim: 384
+  selected_layers: [2, 5, 8, 11]
+  freeze_lvm: true
+
+  # CAPE representation
+  field_channels: 8
+  phase_channels: 8
+  repr_mid_channels: 64
+  cape_repr_dim: 32
+  nuisance_dim: 128
+  cycle_dilation: 4
+  decov_weight: 0.02
+  outside_weight: 0.01
+  motion_floor: 0.015
+  motion_weight: 0.005
+
+  channels: [64, 128, 256, 512]
+  SeparateFCs:
+    in_channels: 512
+    out_channels: 256
+    parts_num: 32
+  SeparateBNNecks:
+    class_num: 100
+    in_channels: 256
+    parts_num: 32
+  bin_num: [32]
+
+optimizer_cfg:
+  solver: SGD
+  lr: 0.1
+  momentum: 0.9
+  weight_decay: 0.0005
+
+scheduler_cfg:
+  scheduler: MultiStepLR
+  gamma: 0.1
+  milestones: [15000, 25000, 35000]
+
+trainer_cfg:
+  find_unused_parameters: true
+  enable_float16: true
+  fix_BN: false
+  log_iter: 100
+  with_test: true
+  restore_ckpt_strict: true
+  restore_hint: 0
+  save_iter: 5000
+  save_name: CAPEGait_CCPG
+  sync_BN: true
+  total_iter: 40000
+  sampler:
+    type: TripletSampler
+    batch_shuffle: true
+    batch_size: [4, 4]
+    frames_num_fixed: 30
+    frames_skip_num: 4
+    frames_num_max: 40
+    frames_num_min: 20
+    sample_type: fixed_unordered
+  transform:
+    - type: Compose
+      trf_cfg:
+        - type: RandomHorizontalFlip
+        - type: BaseRgbTransform
+    - type: BaseSilTransform

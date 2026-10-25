@@ -1,0 +1,170 @@
+data_cfg:
+  dataset_name: CCPG
+  dataset_root: /data3/user25/code/OpenGait/data/CCPG_processed
+  dataset_partition: ./datasets/CCPG/CCPG.json
+  num_workers: 4
+  data_in_use:
+  - false
+  - false
+  - true
+  - true
+  - true
+  - true
+  - true
+  - true
+  - true
+  - true
+  - false
+  - true
+  - true
+  remove_no_gallery: false
+  test_dataset_name: CCPG
+  cache: false
+evaluator_cfg:
+  enable_float16: false
+  restore_ckpt_strict: true
+  restore_hint: 40000
+  save_name: GaitOracle_RGB_TextGRL_CCPG
+  eval_func: evaluate_CCPG
+  sampler:
+    batch_shuffle: false
+    batch_size: 2
+    sample_type: all_ordered
+    frames_all_limit: 720
+    frames_num_fixed: 30
+    frames_skip_num: 0
+  metric: euc
+  transform:
+  - type: BaseRgbNormalizeTransform
+  - type: BaseSilCuttingTransform
+  - type: TextFeatureTransform
+  - type: NuisanceMaskTransform
+  - type: TextFeatureTransform
+  - type: NuisanceMaskTransform
+  - type: TextFeatureTransform
+  - type: NuisanceMaskTransform
+  - type: TextFeatureTransform
+  - type: NuisanceMaskTransform
+loss_cfg:
+- loss_term_weight: 1.0
+  margin: 0.2
+  type: TripletLoss
+  log_prefix: triplet
+- loss_term_weight: 1.0
+  scale: 16
+  type: CrossEntropyLoss
+  log_prefix: softmax
+  log_accuracy: true
+- loss_term_weight: 1.0
+  type: ScalarLoss
+  log_prefix: gaitoracle_aux
+model_cfg:
+  model: GaitOraclePlusPlus
+  channels: 512
+  parts_num: 16
+  rgb_index: 0
+  sil_index: null
+  pc_index: null
+  text_dim: 3584
+  rgb_backbone:
+    type: tiny
+  positive_text:
+    text_dim: 3584
+    prompt_feat_path: tools/gaitoracle/gait_positive_prompt_feat.npy
+    num_prompts: 4
+    trainable: false
+    text_code_dim: 256
+    text_hidden_dim: 1024
+    dropout: 0.1
+  cycle_temporal:
+    heads: 4
+    layers: 1
+    dropout: 0.1
+    future_pred: false
+  nuisance_indices:
+    background: 2
+    carrying: 4
+    clothing: 6
+    occlusion: 8
+  nuisance_mask_indices:
+    background: 3
+    carrying: 5
+    clothing: 7
+    occlusion: 9
+  nuisance_detach:
+    enabled: true
+    immediate_adv: true
+    text_dim: 3584
+    text_code_dim: 256
+    text_hidden_dim: 1024
+    sub_dim: 256
+    grl_lambda: 0.05
+    temperature: 0.07
+    loss_weight: 0.05
+    adv_loss_weight: 0.05
+    probe_loss_weight: 0.0
+    mask_loss_weight: 0.0
+    max_suppression: 0.0
+    factors:
+    - clothing
+    - carrying
+    - background
+    - occlusion
+  rgb_anchor_weight: 0.0
+  future_weight: 0.0
+  verifier:
+    attention_weight: 0.0
+  SeparateFCs:
+    in_channels: 512
+    out_channels: 256
+    parts_num: 16
+  SeparateBNNecks:
+    class_num: 100
+    in_channels: 256
+    parts_num: 16
+  use_scalar_aux_loss: true
+optimizer_cfg:
+  lr: 0.05
+  momentum: 0.9
+  solver: SGD
+  weight_decay: 0.0005
+scheduler_cfg:
+  gamma: 0.1
+  milestones:
+  - 15000
+  - 25000
+  - 35000
+  scheduler: MultiStepLR
+trainer_cfg:
+  find_unused_parameters: true
+  enable_float16: true
+  fix_BN: false
+  with_test: true
+  log_iter: 100
+  restore_ckpt_strict: true
+  optimizer_reset: false
+  scheduler_reset: false
+  restore_hint: 0
+  save_iter: 5000
+  save_name: GaitOracle_RGB_TextGRL_CCPG
+  sync_BN: true
+  total_iter: 40000
+  sampler:
+    batch_shuffle: true
+    batch_size:
+    - 8
+    - 4
+    frames_num_fixed: 30
+    sample_type: fixed_unordered
+    type: TripletSampler
+  transform:
+  - type: BaseRgbNormalizeTransform
+  - type: BaseSilCuttingTransform
+  - type: TextFeatureTransform
+  - type: NuisanceMaskTransform
+  - type: TextFeatureTransform
+  - type: NuisanceMaskTransform
+  - type: TextFeatureTransform
+  - type: NuisanceMaskTransform
+  - type: TextFeatureTransform
+  - type: NuisanceMaskTransform

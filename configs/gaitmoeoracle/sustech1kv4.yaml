@@ -1,0 +1,282 @@
+data_cfg:
+  dataset_name: SUSTech1K
+  dataset_root: /data3/user25/dataset-make/gait/OpenGait/data/sustech1k/SUSTech1K-Released-pkl
+  dataset_partition: ./datasets/SUSTech1K/SUSTech1K.json
+  num_workers: 4
+  data_in_use:
+  - false  # 00-000-LiDAR-PCDs.pkl
+  - false  # 01-000-LiDAR-PCDs_depths.pkl
+  - false  # 02-000-LiDAR-PCDs_sils.pkl
+  - false  # 03-000-Camera-Pose.pkl
+  - false  # 04-000-Camera-Ratios-HW.pkl
+  - false  # 05-000-Camera-RGB_raw.pkl
+  - false  # 06-000-Camera-Sils_aligned.pkl
+  - false  # 07-000-Camera-Sils_raw.pkl
+  - true   # 08-sync-000-LiDAR-PCDs.pkl       -> ipts[0] (pc_index=0)
+  - false  # 09-sync-000-LiDAR-PCDs_depths.pkl
+  - false  # 10-sync-000-LiDAR-PCDs_sils.pkl
+  - false  # 11-sync-000-Camera-Pose.pkl
+  - false  # 12-sync-000-Camera-Ratios-HW.pkl
+  - true   # 13-sync-000-Camera-RGB_raw.pkl    -> ipts[1] (rgb_index=1)
+  - false  # 14-sync-000-Camera-Sils_aligned.pkl
+  - false  # 15-sync-000-Camera-Sils_raw.pkl
+  - true   # qwen25vl_background_feat.pkl      -> ipts[2]
+  - true   # qwen25vl_background_mask.pkl      -> ipts[3]
+  - true   # qwen25vl_carrying_feat.pkl        -> ipts[4]
+  - true   # qwen25vl_carrying_mask.pkl        -> ipts[5]
+  - true   # qwen25vl_clothing_feat.pkl        -> ipts[6]
+  - true   # qwen25vl_clothing_mask.pkl        -> ipts[7]
+  - false  # qwen25vl_nuisance_text.json
+  - true   # qwen25vl_occlusion_feat.pkl       -> ipts[8]
+  - true   # qwen25vl_occlusion_mask.pkl       -> ipts[9]
+  remove_no_gallery: false
+  test_dataset_name: SUSTech1K
+  cache: false
+
+evaluator_cfg:
+  enable_float16: true
+  restore_ckpt_strict: true
+  restore_hint: 40000
+  save_name: GaitMoEOracle_RGBPC_SUSTech1K
+  eval_func: evaluate_indoor_dataset
+  sampler:
+    batch_shuffle: false
+    points_in_use:
+      pointcloud_index: 0
+      points_num: 1024
+    batch_size: 1
+    frames_num_fixed: 10
+    frames_skip_num: 0
+    sample_type: all_ordered
+    frames_all_limit: 720
+  metric: euc
+  transform:
+  - type: PointCloudsTransform
+    xyz_only: true
+    scale_aware: true
+    # scale_prob: 1
+    # flip_prob: 0.15
+    points_num: 1024
+  - type: BaseRgbNormalizeTransform
+  - type: TextFeatureTransform     # ipts[2] background_feat
+  - type: NuisanceMaskTransform    # ipts[3] background_mask
+  - type: TextFeatureTransform     # ipts[4] carrying_feat
+  - type: NuisanceMaskTransform    # ipts[5] carrying_mask
+  - type: TextFeatureTransform     # ipts[6] clothing_feat
+  - type: NuisanceMaskTransform    # ipts[7] clothing_mask
+  - type: TextFeatureTransform     # ipts[8] occlusion_feat
+  - type: NuisanceMaskTransform    # ipts[9] occlusion_mask
+
+loss_cfg:
+- loss_term_weight: 1.0
+  margin: 0.2
+  type: TripletLoss
+  log_prefix: triplet
+- loss_term_weight: 1.0
+  scale: 16
+  type: CrossEntropyLoss
+  log_prefix: softmax
+  log_accuracy: true
+- loss_term_weight: 1.0
+  type: ScalarLoss
+  log_prefix: gaitoracle_aux
+
+model_cfg:
+  model: GaitMoEOracle
+  channels: 512
+  parts_num: 16
+  rgb_index: 1
+  pc_index: 0
+  text_dim: 3584
+  pc_in_dim: 3
+  pc_encoder_type: lidargaitpp #simple             # simple | lidargaitpp
+  proj_dim: 512
+  use_scalar_aux_loss: true
+
+  # --- RGB backbone ---
+  rgb_backbone:
+    type: tiny
+
+  # --- Text adapter ---
+  text_adapter:
+    input_dim: 3584
+    code_dim: 256
+    hidden_dim: 1024
+    dropout: 0.1
+
+  # --- Positive text gate ---
+  positive_text:
+    text_dim: 3584
+    text_code_dim: 256
+    text_hidden_dim: 1024
+    prompt_feat_path: tools/gaitoracle/gait_positive_prompt_feat.npy
+    num_prompts: 4
+    trainable: false
+    dropout: 0.1
+
+  # --- Cycle-aware temporal encoder ---
+  cycle_temporal:
+    heads: 4
+    layers: 1
+    dropout: 0.1
+    future_pred: true
+
+  # --- Nuisance detach (text-guided disentanglement) ---
+  nuisance_indices:
+    background: 2
+    carrying: 4
+    clothing: 6
+    occlusion: 8
+  nuisance_mask_indices:
+    background: 3
+    carrying: 5
+    clothing: 7
+    occlusion: 9
+  nuisance_detach:
+    enabled: true
+    text_dim: 3584
+    text_code_dim: 256
+    text_hidden_dim: 1024
+    sub_dim: 256
+    grl_lambda: 0.08
+    temperature: 0.07
+    warmup_iters: 5000
+    probe_iters: 10000
+    adv_ramp_iters: 10000
+    reliability_start_iter: 15000
+    reliability_ramp_iters: 10000
+    probe_loss_weight: 0.03
+    adv_loss_weight: 0.03
+    mask_loss_weight: 0.015
+    max_suppression: 0.35
+    detach_reliability_gate: true
+    dropout: 0.1
+    factors:
+    - clothing
+    - carrying
+    - background
+    - occlusion
+    factor_weights:
+      clothing: 1.0
+      carrying: 1.0
+      background: 0.6
+      occlusion: 1.0
+
+  # --- Ablation switches & MoE hyper-parameters ---
+  ablation:
+    # Appearance experts (on RGB part features)
+    appearance_moe_enabled: true
+    appearance_num_experts: 8
+    appearance_topk: 2
+
+    # Structure experts (on PC part features)
+    structure_moe_enabled: true
+    structure_num_experts: 8
+    structure_topk: 2
+
+    # Fusion experts (cross-modal, token-level)
+    fusion_moe_enabled: true
+    fusion_fallback: cross_attention     # used when fusion_moe_enabled=false
+    fusion_num_experts: 8
+    fusion_topk: 2
+    fusion_condition_aware: true
+
+    # Temporal
+    temporal_type: cycle_aware           # cycle_aware | max_pooling
+
+    # Text modules
+    text_guidance_enabled: true          # PositiveTextGate
+    nuisance_detach_enabled: true        # StagedNuisanceRemoval
+
+    # Expert internals
+    expert_rank: 16
+    expert_dropout: 0.0
+    cond_dim: 32
+    cond_hidden_dim: 64
+
+    # MoE loss weights
+    balance_loss_weight: 0.01
+    diversity_loss_weight: 0.01
+    diversity_threshold: 0.5
+    condition_cls_weight: 0.05
+
+  # --- Auxiliary loss weights ---
+  rgb_anchor_weight: 0.1
+  future_weight: 0.01
+  verifier:
+    attention_weight: 0.005
+
+  # --- Identity heads ---
+  SeparateFCs:
+    in_channels: 512
+    out_channels: 256
+    parts_num: 16
+  SeparateBNNecks:
+    class_num: 250
+    in_channels: 256
+    parts_num: 16
+  
+  # --- LidarGait++ config (used when pc_encoder_type=lidargaitpp) ---
+  pc_model_cfg:
+    channel: 16
+    npoints: [512, 256, 128]
+    nsample: 32
+    sampling: knn
+    scale_aware: true
+    normalize_dp: true
+
+optimizer_cfg:
+  solver: Adam
+  lr: 0.0003
+  weight_decay: 0.0005
+  momentum: 0.9
+
+scheduler_cfg:
+  gamma: 0.1
+  milestones:
+  - 20000
+  - 30000
+  scheduler: MultiStepLR
+
+trainer_cfg:
+  find_unused_parameters: true
+  enable_float16: true
+  fix_BN: false
+  with_test: true
+  log_iter: 100
+  restore_ckpt_strict: true
+  optimizer_reset: false
+  scheduler_reset: false
+  restore_hint: 0
+  save_iter: 5000
+  save_name: GaitMoEOracle_RGBPC_SUSTech1K
+  sync_BN: true
+  total_iter: 40000
+  sampler:
+    batch_shuffle: true
+    batch_size:
+    - 8
+    - 4
+    frames_num_fixed: 10
+    sample_type: fixed_unordered
+    type: TripletSampler
+    points_in_use:
+      pointcloud_index: 0
+      points_num: 1024
+  transform:
+  - type: PointCloudsTransform
+    xyz_only: true
+    scale_aware: true
+    scale_prob: 1
+    flip_prob: 0.15
+    shift_prob: 0.1
+    jit_prob: 0.1
+  - type: BaseRgbNormalizeTransform
+  - type: TextFeatureTransform     # ipts[2] background_feat
+  - type: NuisanceMaskTransform    # ipts[3] background_mask
+  - type: TextFeatureTransform     # ipts[4] carrying_feat
+  - type: NuisanceMaskTransform    # ipts[5] carrying_mask
+  - type: TextFeatureTransform     # ipts[6] clothing_feat
+  - type: NuisanceMaskTransform    # ipts[7] clothing_mask
+  - type: TextFeatureTransform     # ipts[8] occlusion_feat
+  - type: NuisanceMaskTransform    # ipts[9] occlusion_mask

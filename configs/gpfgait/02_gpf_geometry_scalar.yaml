@@ -1,0 +1,94 @@
+# GPFGait ablation template: 02_gpf_geometry_scalar
+# Edit dataset_root, dataset_partition, class_num before running.
+
+data_cfg:
+  dataset_name: CCPG_GPF
+  dataset_root: /path/to/your/GPF-pkl
+  dataset_partition: /path/to/your/partition.json
+  num_workers: 8
+  cache: false
+  data_in_use: [true, false, false, false]
+
+model_cfg:
+  model: GPFGait
+  variant: gpf_geometry_scalar
+  input_index: 0
+  phase_input_index: null
+  source_channels: 12
+  channel_indices: [0, 1, 2, 3, 4]
+  use_phase_film: false
+  scalar_hidden_channels: 16
+  scalar_activation: none
+  grouped_branch_channels: 8
+  grouped_fuse_channels: 16
+  phase_hidden_channels: 32
+  bin_num: [16]
+  backbone_channels: [64, 128, 256]
+  backbone_strides: [1, 2, 2]
+  blocks_per_stage: [1, 1, 1]
+  emb_channels: 256
+  class_num: 200
+  SeparateFCs:
+    parts_num: 16
+    in_channels: 256
+    out_channels: 256
+  SeparateBNNecks:
+    parts_num: 16
+    in_channels: 256
+    class_num: 200
+  inference_use_emb2: false
+
+loss_cfg:
+  - type: TripletLoss
+    log_prefix: triplet
+    margin: 0.2
+    loss_term_weight: 1.0
+  - type: CrossEntropyLoss
+    log_prefix: softmax
+    scale: 16
+    loss_term_weight: 1.0
+
+optimizer_cfg:
+  solver: Adam
+  lr: 0.0001
+  weight_decay: 0.0005
+
+scheduler_cfg:
+  scheduler: MultiStepLR
+  milestones: [20000, 40000]
+  gamma: 0.1
+
+trainer_cfg:
+  save_name: 02_gpf_geometry_scalar
+  restore_hint: 0
+  restore_ckpt_strict: true
+  optimizer_reset: false
+  scheduler_reset: false
+  enable_float16: true
+  with_test: false
+  fix_BN: false
+  log_iter: 100
+  save_iter: 10000
+  total_iter: 60000
+  sampler:
+    type: TripletSampler
+    batch_size: [8, 16]
+    sample_type: unfixed_ordered
+    frames_num_fixed: 30
+    frames_num_min: 20
+    frames_num_max: 40
+  transform:
+    - type: BaseGPFTransform
+
+evaluator_cfg:
+  save_name: 02_gpf_geometry_scalar
+  restore_hint: 60000
+  restore_ckpt_strict: true
+  enable_float16: false
+  sampler:
+    type: InferenceSampler
+    batch_size: 1
+    sample_type: all_ordered
+  transform:
+    - type: BaseGPFTransform
+  metric: euc

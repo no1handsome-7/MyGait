@@ -1,0 +1,307 @@
+data_cfg:
+  dataset_name: LongRange
+  dataset_root: /data3/user25/dataset-make/gait/OpenGait/data/LRGait
+  dataset_partition: /data3/user25/dataset-make/gait/OpenGait/datasets/LongRange/LongRange.json
+  num_workers: 4
+  data_in_use:
+  - true
+  - false
+  - true
+  - false
+  - true
+  - true
+  - true
+  - true
+  - true
+  - true
+  - false
+  - true
+  - true
+  remove_no_gallery: false
+  test_dataset_name: LongRange
+  cache: false
+evaluator_cfg:
+  enable_float16: true
+  restore_ckpt_strict: true
+  restore_hint: 25000
+  save_name: V2Sol_moe_E5_no_fusion_moe
+  eval_func: evaluate_indoor_dataset
+  sampler:
+    batch_shuffle: false
+    points_in_use:
+      pointcloud_index: 0
+      points_num: 256
+    batch_size: 1
+    frames_num_fixed: 10
+    frames_skip_num: 0
+    sample_type: all_ordered
+    frames_all_limit: 720
+  metric: euc
+  transform:
+  - type: PointCloudsTransform
+    xyz_only: true
+    scale_aware: true
+    points_num: 256
+  - type: BaseRgbNormalizeTransform
+  - type: TextFeatureTransform
+  - type: NuisanceMaskTransform
+  - type: TextFeatureTransform
+  - type: NuisanceMaskTransform
+  - type: TextFeatureTransform
+  - type: NuisanceMaskTransform
+  - type: TextFeatureTransform
+  - type: NuisanceMaskTransform
+optimizer_cfg:
+  lr: 0.0003
+  momentum: 0.9
+  solver: Adam
+  weight_decay: 0.0005
+scheduler_cfg:
+  gamma: 0.1
+  milestones:
+  - 20000
+  scheduler: MultiStepLR
+trainer_cfg:
+  find_unused_parameters: true
+  enable_float16: true
+  fix_BN: false
+  with_test: true
+  log_iter: 100
+  restore_ckpt_strict: true
+  optimizer_reset: false
+  scheduler_reset: false
+  restore_hint: 0
+  save_iter: 5000
+  save_name: V2Sol_moe_E5_no_fusion_moe
+  sync_BN: true
+  total_iter: 25000
+  sampler:
+    batch_shuffle: true
+    batch_size:
+    - 8
+    - 4
+    frames_num_fixed: 10
+    sample_type: fixed_unordered
+    type: TripletSampler
+    points_in_use:
+      pointcloud_index: 0
+      points_num: 256
+  transform:
+  - type: PointCloudsTransform
+    xyz_only: true
+    scale_aware: true
+    scale_prob: 0.5
+    flip_prob: 0.1
+    shift_prob: 0.05
+    jit_prob: 0.03
+  - type: BaseRgbNormalizeTransform
+  - type: TextFeatureTransform
+  - type: NuisanceMaskTransform
+  - type: TextFeatureTransform
+  - type: NuisanceMaskTransform
+  - type: TextFeatureTransform
+  - type: NuisanceMaskTransform
+  - type: TextFeatureTransform
+  - type: NuisanceMaskTransform
+model_cfg:
+  model: GaitMoEOracleV2Sol
+  channels: 256
+  parts_num: 16
+  rgb_index: 1
+  pc_index: 0
+  text_dim: 3584
+  pc_in_dim: 3
+  pc_encoder_type: lidargaitpp
+  proj_dim: 256
+  use_scalar_aux_loss: true
+  collect_visualization: false
+  rgb_backbone:
+    type: tiny
+  text_adapter:
+    input_dim: 3584
+    code_dim: 256
+    hidden_dim: 1024
+    dropout: 0.1
+  positive_text:
+    text_dim: 3584
+    text_code_dim: 256
+    text_hidden_dim: 1024
+    prompt_feat_path: tools/gaitoracle/gait_positive_prompt_feat.npy
+    num_prompts: 4
+    trainable: false
+    dropout: 0.1
+  cycle_temporal:
+    heads: 4
+    layers: 1
+    dropout: 0.1
+    future_pred: true
+  modality_quality:
+    hidden_dim: 128
+  cross_modal_align:
+    align_dim: 128
+    num_heads: 4
+    temperature: 0.07
+    align_weight: 0.15
+    plc_weight: 1.0
+    ims_weight: 0.3
+    warmup_iters: 1000
+    ramp_iters: 5000
+    hard_ratio: 0.5
+  pre_fusion_temporal:
+    kernel_size: 3
+  nuisance_indices:
+    clothing: 2
+    carrying: 4
+    background: 6
+    occlusion: 8
+  nuisance_mask_indices:
+    clothing: 3
+    carrying: 5
+    background: 7
+    occlusion: 9
+  nuisance_detach:
+    enabled: true
+    text_dim: 3584
+    text_code_dim: 256
+    text_hidden_dim: 1024
+    sub_dim: 256
+    grl_lambda: 0.08
+    temperature: 0.07
+    warmup_iters: 3000
+    probe_iters: 5000
+    adv_ramp_iters: 5000
+    reliability_start_iter: 8000
+    reliability_ramp_iters: 5000
+    probe_loss_weight: 0.03
+    adv_loss_weight: 0.03
+    mask_loss_weight: 0.015
+    max_suppression: 0.35
+    detach_reliability_gate: true
+    dropout: 0.1
+    factors:
+    - clothing
+    - carrying
+    - background
+    - occlusion
+    factor_weights:
+      clothing: 1.0
+      carrying: 1.0
+      background: 0.6
+      occlusion: 1.0
+  fusion_expert_ranks:
+  - 16
+  - 16
+  - 32
+  - 32
+  - 32
+  - 64
+  - 64
+  - 64
+  ablation:
+    appearance_moe_enabled: true
+    appearance_num_experts: 8
+    appearance_topk: 2
+    structure_moe_enabled: true
+    structure_num_experts: 8
+    structure_topk: 2
+    fusion_moe_enabled: false
+    fusion_fallback: cross_attention
+    fusion_num_experts: 8
+    fusion_topk: 2
+    fusion_condition_aware: true
+    fusion_expert_rank: 32
+    temporal_type: max_pool
+    text_guidance_enabled: true
+    nuisance_detach_enabled: true
+    cross_modal_align_enabled: true
+    expert_rank: 16
+    expert_dropout: 0.0
+    cond_dim: 64
+    cond_hidden_dim: 128
+    num_illum_bins: 5
+    num_dist_bins: 5
+    balance_loss_weight: 0.02
+    diversity_loss_weight: 0.01
+    diversity_threshold: 0.5
+    condition_cls_weight: 0.1
+    z_loss_weight: 0.01
+    quality_loss_weight: 0.05
+    modality_dropout: 0.1
+    shared_expert_enabled: true
+    shared_expert_rank: 16
+    heterogeneous_experts_enabled: true
+    branch_aux_enabled: true
+    branch_aux_weight: 0.3
+    branch_aux_warmup_iters: 1500
+    branch_aux_out_channels: 256
+    pre_fusion_temporal_enabled: true
+    modality_aware_router_enabled: true
+    hard_negative_enabled: true
+    orthogonality_loss_enabled: true
+    orthogonality_loss_weight: 0.05
+    test_time_ensemble_enabled: true
+    quality_weighted_dropout_enabled: false
+    qact_enabled: false
+    context_mode: cact
+    cact_enabled: true
+  rgb_anchor_weight: 0.1
+  future_weight: 0.01
+  verifier:
+    attention_weight: 0.005
+  SeparateFCs:
+    in_channels: 256
+    out_channels: 256
+    parts_num: 16
+  SeparateBNNecks:
+    class_num: 50
+    in_channels: 256
+    parts_num: 16
+  pc_model_cfg:
+    channel: 16
+    npoints:
+    - 256
+    - 128
+    - 64
+    nsample: 8
+    sampling: knn
+    scale_aware: true
+    normalize_dp: true
+  save_inference_info: true
+  viz_output_dir: ./viz_output/V2Sol_moe_E5_no_fusion_moe
+  cact:
+    num_tokens: 8
+    num_heads: 4
+    dropout: 0.1
+    consistency_weight: 0.05
+    diversity_weight: 0.01
+    cross_probe_enabled: true
+    joint_refine_enabled: true
+loss_cfg:
+- loss_term_weight: 1.0
+  margin: 0.2
+  type: TripletLoss
+  log_prefix: triplet
+- loss_term_weight: 1.0
+  scale: 16
+  type: CrossEntropyLoss
+  log_prefix: softmax
+  log_accuracy: true
+- loss_term_weight: 1.0
+  type: ScalarLoss
+  log_prefix: gaitoracle_aux
+- loss_term_weight: 0.3
+  margin: 0.2
+  type: TripletLoss
+  log_prefix: rgb_aux_triplet
+- loss_term_weight: 0.3
+  scale: 16
+  type: CrossEntropyLoss
+  log_prefix: rgb_aux_softmax
+- loss_term_weight: 0.3
+  margin: 0.2
+  type: TripletLoss
+  log_prefix: pc_aux_triplet
+- loss_term_weight: 0.3
+  scale: 16
+  type: CrossEntropyLoss
+  log_prefix: pc_aux_softmax

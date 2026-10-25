@@ -1,0 +1,144 @@
+data_cfg:
+  dataset_name: CCPG
+  dataset_root: /data3/user25/code/OpenGait/data/CCPG_processed
+  dataset_partition: ./datasets/CCPG/CCPG.json
+  data_in_use: [False, False, True, False]   # aligned-sils / ratios / rgbs / sils
+  num_workers: 8
+  remove_no_gallery: false
+  test_dataset_name: CCPG
+  cache: false
+
+evaluator_cfg:
+  enable_float16: true
+  restore_ckpt_strict: true
+  restore_hint: 30000
+  save_name: PIGGait_CCPG_HS_LRCE
+  eval_func: evaluate_CCPG
+  sampler:
+    batch_shuffle: false
+    batch_size: 1
+    sample_type: all_ordered
+    frames_all_limit: 720
+  metric: euc
+  transform:
+    - type: BaseRgbTransform
+
+loss_cfg:
+  - loss_term_weight: 1.0
+    margin: 0.2
+    type: TripletLoss
+    log_prefix: triplet
+  - loss_term_weight: 0.5
+    scale: 16
+    type: CrossEntropyLoss
+    log_prefix: softmax
+    log_accuracy: true
+
+model_cfg:
+  model: PIGGaitPlusPlus
+  input_normalization: imagenet
+
+  # Stage-1: first make the human-space PIG backbone converge.
+  # Keep nuisance disentanglement disabled to avoid nuisance_adv_loss=nan.
+  nuisance_classes: 8
+  enable_nuisance_losses: false
+  grl_lambda: 0.0
+  rex_ce_scale: 16
+  enable_counterfactual: false
+  loss_weights:
+    phase: 0.10
+    orth: 0.0
+    rex_type: 0.0
+    rex_view: 0.0
+    counterfactual: 0.0
+
+  rgb_pig_cfg:
+    use_dino: true
+    freeze_dino: true
+    pretrained_lvm: /data3/user25/code/OpenGait/checkpoints/dinov2-small
+    use_safetensors: false
+
+    # BiggerGait-style human-space FPN.
+    feature_mode: human_space_fpn
+    dino_size: [224, 112]
+    field_size: [64, 32]
+    field_channels: 32
+    field_dropout: 0.1
+    photo_weight: 0.5
+    dino_dim: 384
+    total_layer_num: 12
+    group_layer_num: 2
+    num_unknown: 8
+    dino_micro_batch: 64
+
+    # Weak soft mask because no pretrained BigGait Mask_Branch is loaded.
+    mask_floor: 0.5
+    mask_blend: 0.5
+    cycle_shift: 8
+    phase_align: true
+    mask_temperature: 1.0
+    dct_cfg:
+      block_size: 8
+      num_parts: 16
+      init_y_dc: 0.25
+      init_chroma: 0.25
+      init_chroma_dc: 0.05
+      init_high: 0.85
+
+  backbone_cfg:
+    type: ResNet9
+    block: BasicBlock
+    channels: [64, 128, 256, 512]
+    layers: [1, 1, 1, 1]
+    strides: [1, 2, 2, 1]
+    maxpool: false
+  SeparateFCs:
+    in_channels: 512
+    out_channels: 256
+    parts_num: 16
+  SeparateBNNecks:
+    class_num: 100
+    in_channels: 256
+    parts_num: 16
+  bin_num: [16]
+  reliability_gamma: 0.5
+  mixstyle_cfg:
+    p: 0.5
+    alpha: 0.3
+
+optimizer_cfg:
+  lr: 0.1
+  momentum: 0.9
+  solver: SGD
+  weight_decay: 0.0005
+
+scheduler_cfg:
+  gamma: 0.1
+  milestones: [15000, 25000]
+  scheduler: MultiStepLR
+
+trainer_cfg:
+  # Safe to keep false because nuisance modules are not registered when disabled.
+  find_unused_parameters: false
+  enable_float16: true
+  fix_BN: false
+  with_test: true
+  log_iter: 100
+  restore_ckpt_strict: true
+  restore_hint: 0
+  save_iter: 5000
+  save_name: PIGGait_CCPG_HS_LRCE
+  sync_BN: true
+  total_iter: 30000
+  sampler:
+    batch_shuffle: true
+    batch_size: [8, 4]
+    frames_num_fixed: 30
+    frames_skip_num: 8
+    sample_type: fixed_ordered
+    type: TripletSampler
+  transform:
+    - type: Compose
+      trf_cfg:
+        - type: RandomHorizontalFlip
+        - type: BaseRgbTransform

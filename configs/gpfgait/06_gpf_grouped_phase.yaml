@@ -1,0 +1,107 @@
+# GPFGait ablation template: 06_gpf_grouped_phase
+# Edit dataset_root, dataset_partition, class_num before running.
+
+data_cfg:
+  dataset_name: CCPG
+  dataset_root: /data3/user25/code/OpenGait/data/CCPG-GPF-pkl
+  dataset_partition: /data3/user25/code/OpenGait/datasets/CCPG/CCPG.json
+  num_workers: 8
+  cache: false
+  remove_no_gallery: false
+  data_in_use: [true, false, true, false]
+  test_dataset_name: CCPG
+
+model_cfg:
+  model: GPFGait
+  variant: gpf_grouped
+  input_index: 0
+  phase_input_index: 1
+  source_channels: 12
+  channel_indices: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+  use_phase_film: true
+  scalar_hidden_channels: 16
+  scalar_activation: none
+  grouped_branch_channels: 8
+  grouped_fuse_channels: 16
+  phase_hidden_channels: 32
+  bin_num: [16]
+  backbone_channels: [64, 128, 256]
+  backbone_strides: [1, 2, 2]
+  blocks_per_stage: [1, 1, 1]
+  emb_channels: 256
+  class_num: 100
+  SeparateFCs:
+    parts_num: 16
+    in_channels: 256
+    out_channels: 256
+  SeparateBNNecks:
+    parts_num: 16
+    in_channels: 256
+    class_num: 100
+  inference_use_emb2: false
+
+loss_cfg:
+  - type: TripletLoss
+    log_prefix: triplet
+    margin: 0.2
+    loss_term_weight: 1.0
+  - type: CrossEntropyLoss
+    log_prefix: softmax
+    scale: 16
+    loss_term_weight: 1.0
+    log_accuracy: true
+
+optimizer_cfg:
+  solver: Adam
+  lr: 0.0003
+  weight_decay: 0.0005
+
+scheduler_cfg:
+  scheduler: MultiStepLR
+  milestones: [20000, 40000]
+  gamma: 0.1
+
+trainer_cfg:
+  save_name: 06_gpf_grouped_phase
+  find_unused_parameters: True
+  restore_hint: 0
+  restore_ckpt_strict: true
+  optimizer_reset: false
+  scheduler_reset: false
+  enable_float16: true
+  with_test: true
+  fix_BN: false
+  sync_BN: true
+  log_iter: 100
+  save_iter: 10000
+  total_iter: 60000
+  sampler:
+    type: TripletSampler
+    batch_shuffle: true
+    batch_size: [8, 16]
+    sample_type: unfixed_ordered
+    frames_num_fixed: 30
+    frames_num_min: 20
+    frames_num_max: 40
+    frames_skip_num: 0
+  transform:
+    - type: BaseGPFTransform
+    - type: BasePhaseTransform
+
+evaluator_cfg:
+  save_name: 06_gpf_grouped_phase
+  restore_hint: 60000
+  restore_ckpt_strict: true
+  enable_float16: false
+  eval_func: evaluate_CCPG
+  sampler:
+    batch_shuffle: false
+    batch_size: 2 # GPUs number
+    sample_type: all_ordered # all indicates whole sequence used to test, while ordered means input sequence by its natural order; Other options:   fixed_unordered
+    frames_all_limit: 720
+    frames_skip_num: 0
+    type: InferenceSampler
+  transform:
+    - type: BaseGPFTransform
+    - type: BasePhaseTransform
+  metric: euc

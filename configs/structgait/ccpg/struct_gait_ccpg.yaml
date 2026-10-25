@@ -1,0 +1,363 @@
+# ===========================================================================
+# StructGait — CCPG Configuration
+#
+# Safe default: A1 capacity-neutral M4 ablation.
+# Goal: make StructGait a fair, baseline-compatible superset before enabling
+# view/phase/MST/probabilistic/consistency modules.
+#
+# Recommended sequence:
+#   A0 baseline equivalence: set enable_subspace=False, emb_channels=256
+#   A1 capacity-neutral M4: current config
+#   A2 supervised/validated view: enable_view_module=True, keep VRE/VAT off
+#   A3 VAT: enable_view_adaptive_triplet=True, theta is detached by code
+#   A4 phase teacher pooling: enable_phase_module=True and switch sampler to ordered
+#   A5 MST: enable_multiscale_module=True after M3 residual/broadcast fix
+# ===========================================================================
+
+data_cfg:
+  dataset_name: CCPG
+  dataset_root: /data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl
+  dataset_partition: /data3/user25/code/OpenGait/datasets/CCPG/CCPG.json
+  num_workers: 8
+  remove_no_gallery: False
+  cache: False
+  test_dataset_name: CCPG
+  data_in_use: [True, False, False, False]
+
+trainer_cfg:
+  # No unused branches in the safe A1 config.
+  find_unused_parameters: True
+  enable_float16: True
+  with_test: True
+  fix_BN: False
+  log_iter: 100
+  restore_ckpt_strict: False
+  optimizer_reset: False
+  scheduler_reset: False
+  restore_hint: 0
+  save_iter: 5000
+  save_name: struct_gait_a1_m4_safe
+  sync_BN: True
+  total_iter: 40000
+  sampler:
+    type: TripletSampler
+    # Match GPFGait baseline identity count for hard mining fairness.
+    batch_size: [8, 4]
+    # OK while M2/M3 are off.  If enable_phase_module or enable_multiscale_module
+    # is turned on, change this to fixed_ordered or unfixed_ordered.
+    sample_type: fixed_unordered
+    frames_num_fixed: 30
+    frames_num_min: 20
+    frames_num_max: 40
+    frames_skip_num: 0
+    batch_shuffle: True
+  transform:
+    - type: BaseGPFTransform
+
+evaluator_cfg:
+  restore_hint: 40000
+  eval_func: evaluate_CCPG
+  save_name: struct_gait_a1_m4_safe
+  restore_ckpt_strict: False
+  enable_float16: True
+  sampler:
+    batch_shuffle: False
+    batch_size: 2
+    sample_type: all_ordered
+    frames_all_limit: 720
+    frames_skip_num: 0
+    type: InferenceSampler
+  transform:
+    - type: BaseGPFTransform
+
+# ---- Loss Configuration ----
+# Keep losses identical to the GPFGait baseline for the first fair comparison.
+loss_cfg:
+  - type: TripletLoss
+    loss_term_weight: 1.0
+    margin: 0.2
+    log_prefix: triplet
+  - type: CrossEntropyLoss
+    loss_term_weight: 1.0
+    scale: 16
+    label_smooth: False
+    log_prefix: softmax
+    log_accuracy: True
+
+optimizer_cfg:
+  solver: Adam
+  lr: 0.0003
+  weight_decay: 0.0005
+  momentum: 0.9
+
+scheduler_cfg:
+  scheduler: MultiStepLR
+  milestones: [15000, 25000, 35000]
+  gamma: 0.1
+
+model_cfg:
+  model: StructGait
+  class_num: 100
+  input_index: 0
+  source_channels: 12
+
+  # ---- Channel layout ----
+  enable_channel_norm: True
+  geo_indices: [0, 1, 2, 3, 4]
+  motion_indices: [5, 8, 9]
+  reliability_index: 10
+  residual_indices: [11]
+
+  # ---- GPFGait stem ----
+  stem_out_channels: 32
+  grouped_branch_channels: 24
+  residual_branch_channels: 12
+  use_reliability_gate: True
+  reliability_gate_strength: 0.75
+  primitive_dropout: 0.05
+
+  # ---- Backbone ----
+  backbone_channels: [64, 128, 256, 512]
+  backbone_strides: [1, 2, 2, 1]
+  blocks_per_stage: [1, 1, 1, 1]
+
+  # ---- HPP + embedding ----
+  bin_num: [32]
+  # Capacity-neutral M4: identity remains 256D, view/cov add 16D each.
+  emb_channels: 288
+  temporal_pool: max
+
+  # ============================================================
+  #  Module switches — safe A1 default
+  # ============================================================
+  enable_view_module: True             # M1; enable after view supervision/validation
+  enable_phase_module: False            # M2; requires ordered sampler when enabled
+  enable_multiscale_module: False       # M3; requires M2
+  enable_subspace: True                 # M4 capacity-neutral subspace
+  enable_probabilistic: False           # M5
+  enable_view_adaptive_triplet: True   # M6; code detaches theta when enabled
+  enable_consistency_loss: True        # M7; add later with warmup/small weight
+
+  # ---- Safety knobs implemented in struct_gait.py ----
+  use_view_rotary_for_metric: False
+  detach_theta_in_triplet: True
+
+  # ---- M1: View config ----
+  view_hidden_dim: 128
+  view_attn_hidden: 32
+
+  # ---- M2: Phase config ----
+  # Use explicit GPF phase channels first; implicit estimator can be enabled
+  # later for distillation once teacher pooling is validated.
+  use_phase_teacher: True
+  phase_teacher_indices: [6, 7]
+  enable_implicit_phase_estimator: False
+  phase_hidden_dim: 64
+  phase_num_harmonics: 4
+  num_phase_bins: 8
+  phase_kappa: 4.0
+
+  # ---- M4: Subspace dimensions ----
+  # emb_channels(288) = id_dim(256) + view_subspace_dim(16) + cov_dim(16)
+  id_dim: 256
+  view_subspace_dim: 16
+
+  # ---- Auxiliary loss weights ----
+  # Only ortho/decorr are active in the safe A1 config.
+  aux_weight_view: 0.1 #0.001
+  aux_weight_phase: 0.1 #0.001
+  aux_weight_phase_teacher: 0.1 #0.001
+  aux_weight_ortho: 0.1 #0.0001
+  aux_weight_decorr: 0.1 #0.0001
+  aux_weight_vpred: 0.1 #0.005
+  aux_warmup_start: 5000
+  aux_warmup_end: 10000
+
+
+
+
+
+# # ===========================================================================
+# # StructGait — CCPG Configuration
+# #
+# # Module switches (independently toggleable for ablation):
+# #   M1  enable_view_module            View-Equivariant features
+# #   M2  enable_phase_module           Implicit Phase modeling
+# #   M3  enable_multiscale_module      Multi-Scale Temporal (requires M2)
+# #   M4  enable_subspace               Subspace Disentanglement
+# #   M5  enable_probabilistic          Probabilistic Embedding
+# #   M6  enable_view_adaptive_triplet  View-Adaptive Triplet margin (loss)
+# #   M7  enable_consistency_loss       Consistency Loss
+# #
+# # Phased implementation plan (proposal §6):
+# #   Phase 1: M4 only             → validate subspace decomposition
+# #   Phase 2: M4 + M6 + M7       → add view-adaptive triplet + consistency
+# #   Phase 3: M4 + M5            → add probabilistic head (swap triplet loss)
+# #   Phase 4: all modules         → full model
+# #
+# # Quick ablation presets:
+# #   Baseline (GPFGait)  : all False
+# #   Full (no prob)      : M1-M4, M6-M7 True, M5 False
+# #   Full (with prob)    : all True (swap triplet → prob_triplet in loss_cfg)
+# # ===========================================================================
+
+# data_cfg:
+#   dataset_name: CCPG
+#   dataset_root: /data3/user25/code/OpenGait/data/CCPG-GPF-128x64-pkl
+#   dataset_partition: /data3/user25/code/OpenGait/datasets/CCPG/CCPG.json
+#   num_workers: 8
+#   remove_no_gallery: False
+#   cache: False
+#   test_dataset_name: CCPG
+#   data_in_use: [True, False, False, False]
+
+# trainer_cfg:
+#   find_unused_parameters: True
+#   enable_float16: True
+#   with_test: True
+#   fix_BN: False
+#   log_iter: 100
+#   restore_ckpt_strict: False
+#   optimizer_reset: False
+#   scheduler_reset: False
+#   restore_hint: 0
+#   save_iter: 5000
+#   save_name: struct_gait_full
+#   sync_BN: True
+#   total_iter: 40000
+#   sampler:
+#     type: TripletSampler
+#     batch_size: [6, 4]
+#     sample_type: fixed_unordered          # MUST keep temporal order for M2/M3
+#     frames_num_fixed: 30
+#     frames_num_min: 20
+#     frames_num_max: 40
+#     frames_skip_num: 0
+#     batch_shuffle: True
+#   transform:
+#     - type: Compose
+#       trf_cfg:
+#         - type: BaseGPFTransform
+#         - type: RandomHorizontalFlip
+#           prob: 0.5
+#           flip_negate_indices: [2, 8]
+#         - type: RandomErasing
+#           prob: 0.3
+#           area_ratio_range: [0.02, 0.12]
+#           aspect_ratio_range: [0.3, 3.3]
+
+# evaluator_cfg:
+#   restore_hint: 40000
+#   eval_func: evaluate_CCPG
+#   save_name: struct_gait_full
+#   restore_ckpt_strict: False
+#   enable_float16: True
+#   sampler:
+#     batch_shuffle: False
+#     batch_size: 1
+#     sample_type: all_ordered
+#     frames_all_limit: 720
+#     frames_skip_num: 0
+#     type: InferenceSampler
+#   transform:
+#     - type: BaseGPFTransform
+
+# # ---- Loss Configuration ----
+# # When enable_probabilistic=False (default):
+# #   triplet key → ViewAdaptiveTripletLoss
+# # When enable_probabilistic=True:
+# #   replace ViewAdaptiveTripletLoss with ProbabilisticTripletLoss,
+# #   change log_prefix from "triplet" to "prob_triplet"
+# loss_cfg:
+#   - type: ViewAdaptiveTripletLoss
+#     loss_term_weight: 1.0
+#     base_margin: 0.2
+#     view_margin_scale: 0.15
+#     log_prefix: triplet
+#   - type: CrossEntropyLoss
+#     loss_term_weight: 1.0
+#     scale: 16
+#     label_smooth: True
+#     eps: 0.1
+#     log_prefix: softmax
+#     log_accuracy: True
+#   - type: ConsistencyLoss
+#     loss_term_weight: 0.1
+#     log_prefix: consistency
+
+# optimizer_cfg:
+#   solver: Adam
+#   lr: 0.0003
+#   weight_decay: 0.0005
+#   momentum: 0.9
+
+# scheduler_cfg:
+#   scheduler: MultiStepLR
+#   milestones: [20000, 35000]
+#   gamma: 0.1
+
+# model_cfg:
+#   model: StructGait
+#   class_num: 100
+#   input_index: 0
+#   source_channels: 12
+
+#   # ---- Channel layout ----
+#   enable_channel_norm: True
+#   geo_indices: [0, 1, 2, 3, 4]
+#   motion_indices: [5, 8, 9]
+#   reliability_index: 10
+#   residual_indices: [11]
+
+#   # ---- GPFGait stem ----
+#   stem_out_channels: 32
+#   grouped_branch_channels: 24
+#   residual_branch_channels: 12
+#   use_reliability_gate: True
+#   reliability_gate_strength: 0.75
+#   primitive_dropout: 0.05
+
+#   # ---- Backbone ----
+#   backbone_channels: [64, 128, 256, 512]
+#   backbone_strides: [1, 2, 2, 1]
+#   blocks_per_stage: [1, 1, 1, 1]
+
+#   # ---- HPP + embedding ----
+#   bin_num: [32]
+#   emb_channels: 256
+#   temporal_pool: max
+
+#   # ============================================================
+#   #  Module switches
+#   # ============================================================
+#   enable_view_module: True              # M1
+#   enable_phase_module: False             # M2
+#   enable_multiscale_module: False        # M3
+#   enable_subspace: True                 # M4
+#   enable_probabilistic: False           # M5 (enable after M4 validated)
+#   enable_view_adaptive_triplet: True    # M6
+#   enable_consistency_loss: True         # M7
+
+#   # ---- M1: View config ----
+#   view_hidden_dim: 128
+#   view_attn_hidden: 32
+
+#   # ---- M2: Phase config ----
+#   phase_hidden_dim: 64
+#   phase_num_harmonics: 4
+#   num_phase_bins: 8
+#   phase_kappa: 4.0
+
+#   # ---- M4: Subspace dimensions (proposal §5) ----
+#   # emb_channels(256) = id_dim(224) + view_subspace_dim(16) + cov_dim(16)
+#   id_dim: 224
+#   view_subspace_dim: 16
+
+#   # ---- Auxiliary loss weights (all deliberately small) ----
+#   aux_weight_view: 0.001
+#   aux_weight_phase: 0.001
+#   aux_weight_ortho: 0.001
+#   aux_weight_decorr: 0.001
+#   aux_weight_vpred: 0.005
+#   aux_warmup_start: 5000
+#   aux_warmup_end: 10000
