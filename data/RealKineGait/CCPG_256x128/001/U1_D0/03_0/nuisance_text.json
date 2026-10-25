@@ -1,0 +1,14 @@
+{
+  "attire": {
+    "sweatshirt": "gray",
+    "pants": "beige",
+    "shoes": "white"
+  },
+  "clothing_geometry_effect": "expanded torso, hidden arm gap",
+  "carried_objects": "phone",
+  "viewpoint": "side",
+  "illumination": "even",
+  "background": "indoor, green floor",
+  "occlusion": "face",
+  "image_quality": "clear"
+}

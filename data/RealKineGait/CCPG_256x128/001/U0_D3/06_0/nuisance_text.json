@@ -1,0 +1,10 @@
+{
+  "attire": "orange t-shirt, dark pants",
+  "clothing_geometry_effect": "expanded torso, loose pants",
+  "carried_objects": "pink object in hand",
+  "viewpoint": "rear view",
+  "illumination": "even lighting",
+  "background": "green netting",
+  "occlusion": "none",
+  "image_quality": "clear"
+}
