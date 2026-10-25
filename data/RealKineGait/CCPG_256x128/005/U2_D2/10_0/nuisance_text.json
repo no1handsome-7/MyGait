@@ -1,0 +1,10 @@
+{
+  "attire": "black jacket, light blue jeans, white sneakers",
+  "clothing_geometry_effect": "jacket slightly distorts torso shape, jeans fit loosely",
+  "carried_objects": "none",
+  "viewpoint": "side view",
+  "illumination": "even lighting",
+  "background": "indoor setting with green tarp and ladder",
+  "occlusion": "partial",
+  "image_quality": "clear"
+}

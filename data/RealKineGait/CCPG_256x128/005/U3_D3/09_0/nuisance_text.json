@@ -1,0 +1,10 @@
+{
+  "attire": "blue jacket with white stripes, light-colored pants",
+  "clothing_geometry_effect": "slightly loose fit, torso appears slightly expanded due to jacket",
+  "carried_objects": "none",
+  "viewpoint": "side view",
+  "illumination": "even lighting, no harsh shadows",
+  "background": "industrial setting with metal structures and green panels",
+  "occlusion": "no significant occlusions",
+  "image_quality": "low resolution, some blurriness"
+}

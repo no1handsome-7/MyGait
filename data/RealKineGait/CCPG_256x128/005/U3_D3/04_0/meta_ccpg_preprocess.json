@@ -1,0 +1,23 @@
+{
+  "pid": "005",
+  "condition": "U3_D3",
+  "view": "04_0",
+  "frames": 68,
+  "rgb_shape": [
+    256,
+    128,
+    3
+  ],
+  "sil_shape": [
+    256,
+    128
+  ],
+  "crop_mode": "frame",
+  "bbox_margin": 0.15,
+  "keep_aspect": false,
+  "frame_step": 1,
+  "max_frames": 0,
+  "missing_sil_frames": 0,
+  "rgb_source": "/data3/user25/data_desk/CCPG_D_MASK_FACE_SHOE/005/U3_D3/04_0",
+  "sil_source": "/data3/user25/data_desk/CCPG_G_SIL/005/U3_D3/04_0"
+}

@@ -1,0 +1,10 @@
+{
+  "attire": "black jacket, light blue jeans, white shoes",
+  "clothing_geometry_effect": "jacket slightly distorts silhouette, jeans fit loosely",
+  "carried_objects": "none",
+  "viewpoint": "side view",
+  "illumination": "even lighting",
+  "background": "industrial setting with metal doors and walls",
+  "occlusion": "none",
+  "image_quality": "clear"
+}
