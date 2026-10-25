@@ -1,0 +1,10 @@
+{
+  "attire": "red hoodie, light blue jeans, white shoes",
+  "clothing_geometry_effect": "expanded torso, hidden arm gap",
+  "carried_objects": "none",
+  "viewpoint": "frontal",
+  "illumination": "even",
+  "background": "indoor, green floor, white wall",
+  "occlusion": "none",
+  "image_quality": "clear"
+}

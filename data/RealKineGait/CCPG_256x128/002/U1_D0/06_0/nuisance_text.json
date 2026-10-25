@@ -1,0 +1,10 @@
+{
+  "attire": "red hoodie, gray sweatpants",
+  "clothing_geometry_effect": "expanded torso due to hoodie, loose fit of sweatpants",
+  "carried_objects": "none",
+  "viewpoint": "rear view",
+  "illumination": "even lighting",
+  "background": "green tarp, pink stool",
+  "occlusion": "partial face",
+  "image_quality": "clear"
+}
