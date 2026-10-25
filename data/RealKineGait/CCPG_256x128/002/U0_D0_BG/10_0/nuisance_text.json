@@ -1,0 +1,10 @@
+{
+  "attire": "brown shirt with white stripes, light blue jeans, white shoes",
+  "clothing_geometry_effect": "slightly loose fit, normal torso shape",
+  "carried_objects": "yellow bag with black strap",
+  "viewpoint": "side view, back view",
+  "illumination": "even lighting, no harsh shadows",
+  "background": "industrial setting with green netting, metal structures",
+  "occlusion": "no significant occlusions",
+  "image_quality": "clear, high resolution"
+}
