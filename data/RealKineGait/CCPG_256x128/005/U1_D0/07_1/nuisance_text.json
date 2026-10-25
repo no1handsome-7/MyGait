@@ -1,0 +1,10 @@
+{
+  "attire": "dark blue sweatshirt, black pants, white shoes",
+  "clothing_geometry_effect": "loose fit, no visible distortion",
+  "carried_objects": "red bag",
+  "viewpoint": "side view",
+  "illumination": "even lighting",
+  "background": "green tarp",
+  "occlusion": "none",
+  "image_quality": "clear"
+}

@@ -1,0 +1,10 @@
+{
+  "attire": "black sweatshirt with text, black pants, white sneakers",
+  "clothing_geometry_effect": "loose fit, no visible distortion of silhouette",
+  "carried_objects": "none",
+  "viewpoint": "frontal",
+  "illumination": "even lighting",
+  "background": "indoor setting with green wall and floor",
+  "occlusion": "partial face obscured by a mask",
+  "image_quality": "clear"
+}

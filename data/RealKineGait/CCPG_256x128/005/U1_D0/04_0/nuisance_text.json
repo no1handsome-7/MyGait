@@ -1,0 +1,10 @@
+{
+  "attire": "dark blue sweater, black pants, white shoes",
+  "clothing_geometry_effect": "expanded torso, loose clothing",
+  "carried_objects": "green object in hand",
+  "viewpoint": "rear view",
+  "illumination": "even lighting",
+  "background": "green netting, concrete floor",
+  "occlusion": "none",
+  "image_quality": "clear"
+}

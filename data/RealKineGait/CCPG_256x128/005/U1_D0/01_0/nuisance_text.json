@@ -1,0 +1,17 @@
+{
+  "attire": {
+    "sweatshirt": "dark blue",
+    "pants": "black",
+    "shoes": "white"
+  },
+  "clothing_geometry_effect": {
+    "sweatshirt": "loose fit",
+    "pants": "tight fit"
+  },
+  "carried_objects": "none",
+  "viewpoint": "frontal",
+  "illumination": "even",
+  "background": "indoor",
+  "occlusion": "none",
+  "image_quality": "clear"
+}
