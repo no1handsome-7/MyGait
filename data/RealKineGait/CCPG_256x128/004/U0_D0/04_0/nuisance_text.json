@@ -1,0 +1,10 @@
+{
+  "attire": "white shirt, black pants",
+  "clothing_geometry_effect": "expanded torso, hidden arm gap",
+  "carried_objects": "umbrella",
+  "viewpoint": "rear view",
+  "illumination": "even lighting",
+  "background": "green netting",
+  "occlusion": "umbrella partially obscures face",
+  "image_quality": "clear"
+}

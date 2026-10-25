@@ -1,0 +1,10 @@
+{
+  "attire": "gray hoodie, green pants, white shoes",
+  "clothing_geometry_effect": "slightly loose fit, hood covers head",
+  "carried_objects": "no visible objects",
+  "viewpoint": "rear view",
+  "illumination": "even lighting",
+  "background": "construction site with wooden planks, green tarp, ladder",
+  "occlusion": "partial, by green tarp",
+  "image_quality": "clear"
+}
