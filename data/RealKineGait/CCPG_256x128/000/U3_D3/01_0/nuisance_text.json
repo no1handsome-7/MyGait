@@ -1,0 +1,14 @@
+{
+  "attire": {
+    "sweatshirt": "dark blue",
+    "shorts": "camouflage",
+    "shoes": "white"
+  },
+  "clothing_geometry_effect": "expanded torso, hidden arm gap",
+  "carried_objects": "none",
+  "viewpoint": "frontal",
+  "illumination": "even",
+  "background": "indoor",
+  "occlusion": "none",
+  "image_quality": "clear"
+}

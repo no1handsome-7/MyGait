@@ -1,0 +1,16 @@
+{
+  "attire": {
+    "top": "black jacket",
+    "bottom": "light green pants"
+  },
+  "clothing_geometry_effect": {
+    "torso": "slightly expanded",
+    "arms": "hidden behind back"
+  },
+  "carried_objects": [],
+  "viewpoint": "frontal",
+  "illumination": "even",
+  "background": "indoor, green wall",
+  "occlusion": "none",
+  "image_quality": "clear"
+}

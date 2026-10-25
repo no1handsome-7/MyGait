@@ -1,0 +1,10 @@
+{
+  "attire": "dark blue sweatshirt, camouflage shorts, white socks",
+  "clothing_geometry_effect": "expanded torso, hidden arm gap, skirt-like lower-body contour",
+  "carried_objects": "none",
+  "viewpoint": "rear view",
+  "illumination": "indoor, artificial light",
+  "background": "concrete floor, metal bars",
+  "occlusion": "partial",
+  "image_quality": "clear"
+}
