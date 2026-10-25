@@ -1,0 +1,10 @@
+{
+  "attire": "denim jumpsuit",
+  "clothing_geometry_effect": "expanded torso, loose fit",
+  "carried_objects": "none",
+  "viewpoint": "rear view",
+  "illumination": "even lighting",
+  "background": "green tarp, pink object",
+  "occlusion": "partial",
+  "image_quality": "clear"
+}

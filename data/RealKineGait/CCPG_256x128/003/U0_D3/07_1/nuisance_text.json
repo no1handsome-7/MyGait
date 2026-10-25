@@ -1,0 +1,10 @@
+{
+  "attire": "striped shirt, olive green pants",
+  "clothing_geometry_effect": "expanded torso, visible arm gaps",
+  "carried_objects": "pink bag",
+  "viewpoint": "rear view",
+  "illumination": "even lighting",
+  "background": "green curtain",
+  "occlusion": "partial",
+  "image_quality": "clear"
+}
