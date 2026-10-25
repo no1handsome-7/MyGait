@@ -1,0 +1,10 @@
+{
+  "attire": "white shirt, black pants",
+  "clothing_geometry_effect": "slightly loose fit, straight cut",
+  "carried_objects": "none",
+  "viewpoint": "side view",
+  "illumination": "indoor, artificial light",
+  "background": "green tarp, construction materials",
+  "occlusion": "partial, by green tarp",
+  "image_quality": "low resolution"
+}
