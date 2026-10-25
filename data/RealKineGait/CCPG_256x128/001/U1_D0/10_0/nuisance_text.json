@@ -1,0 +1,10 @@
+{
+  "attire": "gray hoodie, beige pants, white shoes",
+  "clothing_geometry_effect": "slightly loose fit, normal torso shape",
+  "carried_objects": "red object in hand",
+  "viewpoint": "side view",
+  "illumination": "even lighting",
+  "background": "indoor setting with green netting and construction materials",
+  "occlusion": "partial occlusion by green netting",
+  "image_quality": "moderate quality"
+}
