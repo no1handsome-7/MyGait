@@ -1,0 +1,10 @@
+{
+  "attire": "black long-sleeve shirt, light gray pants",
+  "clothing_geometry_effect": "expanded torso, hidden arm gap",
+  "carried_objects": "red bag",
+  "viewpoint": "side view",
+  "illumination": "indoor lighting",
+  "background": "green tarp",
+  "occlusion": "partial",
+  "image_quality": "clear"
+}

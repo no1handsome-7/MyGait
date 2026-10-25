@@ -1,0 +1,10 @@
+{
+  "attire": "green sweatshirt, dark pants, white socks",
+  "clothing_geometry_effect": "loose clothing, no visible bags or umbrellas",
+  "carried_objects": "none",
+  "viewpoint": "frontal",
+  "illumination": "even lighting",
+  "background": "indoor setting with green floor and wall",
+  "occlusion": "face obscured by white mask",
+  "image_quality": "clear"
+}

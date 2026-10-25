@@ -1,0 +1,10 @@
+{
+  "attire": "black long-sleeve shirt, light gray pants",
+  "clothing_geometry_effect": "slightly loose fit, normal torso shape",
+  "carried_objects": "none",
+  "viewpoint": "side view",
+  "illumination": "even lighting",
+  "background": "indoor setting with green fabric and wooden structure",
+  "occlusion": "partial occlusion by green fabric in later frames",
+  "image_quality": "low resolution"
+}

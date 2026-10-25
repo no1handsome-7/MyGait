@@ -1,0 +1,10 @@
+{
+  "attire": "black long-sleeve shirt, gray shorts, white socks, gray shoes",
+  "clothing_geometry_effect": "expanded torso, visible arm gaps, loose shorts",
+  "carried_objects": "box",
+  "viewpoint": "side view",
+  "illumination": "even lighting",
+  "background": "green wall",
+  "occlusion": "none",
+  "image_quality": "clear"
+}
