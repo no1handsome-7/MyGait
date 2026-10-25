@@ -1,0 +1,10 @@
+{
+  "attire": "black sleeveless top, black shorts",
+  "clothing_geometry_effect": "expanded torso, hidden arm gap, skirt-like lower-body contour",
+  "carried_objects": "black bag slung over shoulder",
+  "viewpoint": "top-down, side",
+  "illumination": "even, natural light",
+  "background": "indoor, green wall, concrete floor",
+  "occlusion": "face blurred",
+  "image_quality": "low resolution"
+}

@@ -1,0 +1,10 @@
+{
+  "attire": "black sleeveless shirt, black shorts",
+  "clothing_geometry_effect": "expanded torso, hidden arm gap",
+  "carried_objects": "cardboard box",
+  "viewpoint": "side view",
+  "illumination": "even lighting",
+  "background": "green netting",
+  "occlusion": "none",
+  "image_quality": "clear"
+}
