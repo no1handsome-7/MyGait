@@ -1,0 +1,14 @@
+{
+  "attire": {
+    "top": "black sleeveless shirt",
+    "bottom": "camouflage shorts",
+    "footwear": "white socks"
+  },
+  "clothing_geometry_effect": "expanded torso, hidden arm gap",
+  "carried_objects": "none",
+  "viewpoint": "side",
+  "illumination": "even",
+  "background": "indistinct urban setting",
+  "occlusion": "none",
+  "image_quality": "clear"
+}

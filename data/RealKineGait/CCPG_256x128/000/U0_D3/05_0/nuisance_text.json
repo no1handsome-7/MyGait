@@ -1,0 +1,10 @@
+{
+  "attire": "black sleeveless top, camouflage shorts, white socks",
+  "clothing_geometry_effect": "expanded torso, hidden arm gap, skirt-like lower-body contour",
+  "carried_objects": "",
+  "viewpoint": "frontal",
+  "illumination": "even",
+  "background": "indoor, green wall, concrete floor",
+  "occlusion": "partial face",
+  "image_quality": "clear"
+}

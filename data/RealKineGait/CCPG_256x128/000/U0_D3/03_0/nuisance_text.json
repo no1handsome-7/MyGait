@@ -1,0 +1,13 @@
+{
+  "attire": {
+    "top": "black sleeveless shirt",
+    "bottom": "camouflage shorts"
+  },
+  "clothing_geometry_effect": "expanded torso, hidden arm gap",
+  "carried_objects": "none",
+  "viewpoint": "side view",
+  "illumination": "bright",
+  "background": "indoor court",
+  "occlusion": "none",
+  "image_quality": "clear"
+}

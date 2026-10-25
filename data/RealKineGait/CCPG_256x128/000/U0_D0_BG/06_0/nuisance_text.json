@@ -1,0 +1,10 @@
+{
+  "attire": "black sleeveless top, black shorts",
+  "clothing_geometry_effect": "expanded torso due to top, tight fit of shorts",
+  "carried_objects": "black backpack",
+  "viewpoint": "rear view",
+  "illumination": "even lighting",
+  "background": "green tarp",
+  "occlusion": "partially obscured by tarp in some frames",
+  "image_quality": "clear"
+}

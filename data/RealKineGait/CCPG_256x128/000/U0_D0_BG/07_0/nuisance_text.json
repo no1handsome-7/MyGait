@@ -1,0 +1,10 @@
+{
+  "attire": "black tank top, black shorts, red socks",
+  "clothing_geometry_effect": "expanded torso, hidden arm gap",
+  "carried_objects": "backpack",
+  "viewpoint": "rear view",
+  "illumination": "even lighting",
+  "background": "green tarp",
+  "occlusion": "none",
+  "image_quality": "clear"
+}

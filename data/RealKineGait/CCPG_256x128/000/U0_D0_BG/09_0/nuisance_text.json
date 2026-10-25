@@ -1,0 +1,19 @@
+{
+  "attire": {
+    "shirt": "black sleeveless",
+    "shorts": "black",
+    "shoes": "white"
+  },
+  "clothing_geometry_effect": {
+    "torso": "slightly expanded",
+    "arms": "hidden behind back"
+  },
+  "carried_objects": {
+    "backpack": "black"
+  },
+  "viewpoint": "side",
+  "illumination": "even",
+  "background": "industrial",
+  "occlusion": "none",
+  "image_quality": "clear"
+}

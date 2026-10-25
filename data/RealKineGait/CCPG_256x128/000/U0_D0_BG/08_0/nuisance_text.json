@@ -1,0 +1,10 @@
+{
+  "attire": "black sleeveless top, black shorts, white sneakers",
+  "clothing_geometry_effect": "tight-fitting top, loose shorts, visible leg gap",
+  "carried_objects": "backpack",
+  "viewpoint": "side view",
+  "illumination": "even lighting",
+  "background": "green netting",
+  "occlusion": "none",
+  "image_quality": "clear"
+}

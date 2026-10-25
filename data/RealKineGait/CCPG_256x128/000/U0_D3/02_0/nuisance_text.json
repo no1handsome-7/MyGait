@@ -1,0 +1,10 @@
+{
+  "attire": "black sleeveless shirt, camouflage shorts",
+  "clothing_geometry_effect": "expanded torso, visible arm gaps, loose shorts",
+  "carried_objects": "none",
+  "viewpoint": "rear view",
+  "illumination": "natural daylight",
+  "background": "concrete surface, partial wall",
+  "occlusion": "partial",
+  "image_quality": "clear"
+}
