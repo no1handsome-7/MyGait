@@ -1,0 +1,10 @@
+{
+  "attire": "red hoodie, blue jeans, white sneakers",
+  "clothing_geometry_effect": "expanded torso due to hoodie, tight fit of jeans",
+  "carried_objects": "none",
+  "viewpoint": "side view",
+  "illumination": "even lighting",
+  "background": "green netting",
+  "occlusion": "partial face obscured",
+  "image_quality": "clear"
+}

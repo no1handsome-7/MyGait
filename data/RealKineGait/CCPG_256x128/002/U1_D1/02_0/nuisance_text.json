@@ -1,0 +1,10 @@
+{
+  "attire": "red jacket, blue jeans",
+  "clothing_geometry_effect": "expanded torso, visible arm gaps",
+  "carried_objects": "none",
+  "viewpoint": "rear view",
+  "illumination": "even lighting",
+  "background": "indoor setting with walls and objects",
+  "occlusion": "none",
+  "image_quality": "clear"
+}

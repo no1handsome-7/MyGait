@@ -1,0 +1,10 @@
+{
+  "attire": "red hoodie, blue jeans, white sneakers",
+  "clothing_geometry_effect": "hoodie covers head, jeans fit loosely, sneakers cover feet",
+  "carried_objects": "none",
+  "viewpoint": "side view",
+  "illumination": "even lighting",
+  "background": "industrial setting with green tarp, metal structures",
+  "occlusion": "none",
+  "image_quality": "clear"
+}
