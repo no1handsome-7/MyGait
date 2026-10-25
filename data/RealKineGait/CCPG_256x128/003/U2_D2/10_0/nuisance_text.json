@@ -1,0 +1,10 @@
+{
+  "attire": "black hoodie, light gray pants",
+  "clothing_geometry_effect": "loose clothing, hood covers head",
+  "carried_objects": "none",
+  "viewpoint": "side view",
+  "illumination": "indoor, artificial lighting",
+  "background": "construction site, green tarp, ladder",
+  "occlusion": "partially obscured by tarp",
+  "image_quality": "clear"
+}

@@ -1,0 +1,10 @@
+{
+  "attire": "gray hoodie, brown pants",
+  "clothing_geometry_effect": "expanded torso due to hoodie, loose fit of pants",
+  "carried_objects": "none",
+  "viewpoint": "rear view",
+  "illumination": "even lighting",
+  "background": "green tarp, pink object",
+  "occlusion": "partial",
+  "image_quality": "clear"
+}
