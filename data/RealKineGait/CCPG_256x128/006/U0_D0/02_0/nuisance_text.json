@@ -1,0 +1,17 @@
+{
+  "attire": {
+    "shirt": "light blue",
+    "pants": "black",
+    "shoes": "white"
+  },
+  "clothing_geometry_effect": {
+    "shirt": "slightly loose",
+    "pants": "tight fit"
+  },
+  "carried_objects": [],
+  "viewpoint": "rear",
+  "illumination": "even",
+  "background": "indoor, possibly a corridor",
+  "occlusion": "none",
+  "image_quality": "clear"
+}

@@ -1,0 +1,10 @@
+{
+  "attire": "white t-shirt, black pants",
+  "clothing_geometry_effect": "expanded torso, hidden arm gap",
+  "carried_objects": "none",
+  "viewpoint": "rear view",
+  "illumination": "even lighting",
+  "background": "green netting",
+  "occlusion": "partial",
+  "image_quality": "clear"
+}

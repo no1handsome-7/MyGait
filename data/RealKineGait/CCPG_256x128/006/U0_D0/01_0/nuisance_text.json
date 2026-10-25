@@ -1,0 +1,18 @@
+{
+  "attire": {
+    "shirt": "white",
+    "pants": "black",
+    "shoes": "white"
+  },
+  "clothing_geometry_effect": {
+    "torso": "slightly expanded",
+    "arms": "hidden behind body",
+    "lower_body": "slightly distorted"
+  },
+  "carried_objects": "none",
+  "viewpoint": "frontal",
+  "illumination": "even",
+  "background": "indoor",
+  "occlusion": "none",
+  "image_quality": "clear"
+}

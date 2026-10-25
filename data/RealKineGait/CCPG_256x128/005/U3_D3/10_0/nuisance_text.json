@@ -1,0 +1,10 @@
+{
+  "attire": "blue vest over white long-sleeve shirt, gray pants",
+  "clothing_geometry_effect": "slightly loose fit, torso slightly expanded",
+  "carried_objects": "none",
+  "viewpoint": "side view, mostly",
+  "illumination": "even, indoor lighting",
+  "background": "industrial setting with green tarp, metal structures",
+  "occlusion": "partial, by green tarp in some frames",
+  "image_quality": "clear"
+}
