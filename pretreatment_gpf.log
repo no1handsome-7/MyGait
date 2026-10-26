@@ -1,0 +1,8 @@
+[2026-05-28 14:45:41,600 - INFO]: Target GPF resolution: 128x64
+[2026-05-28 14:45:41,601 - INFO]: Scaled primitive params: {'resolution_scale': 2.0, 'sdf_clip': 16.0, 'flow_clip': 8.0, 'mid_sigma': 4.0, 'edge_ksize': 5, 'flow_winsize': 11, 'default_min_sil_area': 80, 'out_h': 128, 'out_w': 64}
+[2026-05-28 14:45:41,601 - INFO]: Using min_sil_area=80
+[2026-05-28 14:45:41,601 - INFO]: Listing RGB frames from /data3/user25/data_desk/CCPG_D_MASK_FACE_SHOE
+[2026-05-28 15:44:09,280 - INFO]: Listing silhouette frames from /data3/user25/data_desk/CCPG_G_SIL
+[2026-05-28 16:18:24,314 - INFO]: Found 16365 paired sequences.
+[2026-05-28 16:18:36,597 - INFO]: Prepared 16365 non-empty sequence jobs.
+[2026-05-28 18:30:19,485 - INFO]: Done. ok=16365, skip=0, empty=0

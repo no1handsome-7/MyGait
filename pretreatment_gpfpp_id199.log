@@ -1,0 +1,4 @@
+[2026-05-27 09:09:01,445 - INFO]: Listing RGB frames from /data3/user25/data_desk/CCPG_D_MASK_FACE_SHOE/199
+[2026-05-27 09:09:30,607 - INFO]: Listing silhouette frames from /data3/user25/data_desk/CCPG_G_SIL/199
+[2026-05-27 09:10:00,198 - INFO]: Prepared 83 paired sequence jobs.
+[2026-05-27 09:10:32,539 - INFO]: Done. ok=83, skip=0, empty=0
