@@ -1,0 +1,15 @@
+{
+  "seq_dir": "/data3/user25/code/OpenGait/data/CCPG-GPFPP-pkl/007/U0_D0_BG/07_0",
+  "gpf_path": "/data3/user25/code/OpenGait/data/CCPG-GPFPP-pkl/007/U0_D0_BG/07_0/000-gpf.pkl",
+  "gpf_shape_tchw": [
+    104,
+    28,
+    64,
+    32
+  ],
+  "selected_frame": 52,
+  "sil_path": "/data3/user25/code/OpenGait/data/CCPG-GPFPP-pkl/007/U0_D0_BG/07_0/001-sils.pkl",
+  "phase_path": "/data3/user25/code/OpenGait/data/CCPG-GPFPP-pkl/007/U0_D0_BG/07_0/002-phase.pkl",
+  "parts_path": "/data3/user25/code/OpenGait/data/CCPG-GPFPP-pkl/007/U0_D0_BG/07_0/003-parts.pkl",
+  "quality_path": "/data3/user25/code/OpenGait/data/CCPG-GPFPP-pkl/007/U0_D0_BG/07_0/004-quality.pkl"
+}

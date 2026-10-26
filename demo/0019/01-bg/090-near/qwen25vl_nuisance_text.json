@@ -1,0 +1,37 @@
+{
+  "sequence_dir": "demo/0019/01-bg/090-near",
+  "reference_pkl": "13-sync-090-near-Camera-RGB_raw.pkl",
+  "model": "mllm/Qwen2.5-VL-7B-Instruct",
+  "prompt": "You are assisting clothing-invariant gait recognition. Given these walking frames, describe only non-gait nuisance factors that a gait recognition model should ignore. Do not describe walking rhythm, stride, leg swing, arm swing, identity, body build, gender, age, or biometric traits. Focus only on clothing, carried objects, bags, coats, loose garments, background, occlusion, illumination, and camera/view artifacts. Be conservative. If a factor is not clearly visible, set present to false. Return exactly one compact JSON object with keys: clothing, carrying, background, occlusion. Each key must contain: present, description, confidence. present must be true or false. confidence must be low, medium, or high. No markdown. No extra explanation.",
+  "raw_caption": "```json\n{\n  \"clothing\": {\n    \"present\": true,\n    \"description\": \"The person is wearing dark pants and a dark jacket.\",\n    \"confidence\": \"medium\"\n  },\n  \"carrying\": {\n    \"present\": true,\n    \"description\": \"The person is carrying a backpack.\",\n    \"confidence\": \"high\"\n  },\n  \"background\": {\n    \"present\": true,\n    \"description\": \"The background includes a building facade and some greenery.\",\n    \"confidence\": \"low\"\n  },\n  \"occlusion\": {\n    \"present\": false,\n    \"description\": \"\",\n    \"confidence\": \"low\"\n  }\n}\n```",
+  "parsed": {
+    "clothing": {
+      "present": true,
+      "description": "The person is wearing dark pants and a dark jacket.",
+      "confidence": "medium"
+    },
+    "carrying": {
+      "present": true,
+      "description": "The person is carrying a backpack.",
+      "confidence": "high"
+    },
+    "background": {
+      "present": true,
+      "description": "The background includes a building facade and some greenery.",
+      "confidence": "low"
+    },
+    "occlusion": {
+      "present": false,
+      "description": "",
+      "confidence": "low"
+    }
+  },
+  "clothing_feature_dim": 3584,
+  "clothing_mask_weight": 0.5,
+  "carrying_feature_dim": 3584,
+  "carrying_mask_weight": 1.0,
+  "background_feature_dim": 3584,
+  "background_mask_weight": 0.0,
+  "occlusion_feature_dim": 3584,
+  "occlusion_mask_weight": 0.0
+}
